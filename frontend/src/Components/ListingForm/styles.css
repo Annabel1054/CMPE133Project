@@ -1,5 +1,11 @@
 .formContainer {
     width: 80%;
-    background-color: rgb(200, 200, 252);
+    background-color: rgb(199, 199, 227);
     padding: 20px;
+    margin-left: 10%;
+    margin-top: 10%;
+}
+
+.row {
+    margin-bottom: 20px;
 }

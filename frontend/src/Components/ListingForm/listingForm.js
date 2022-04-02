@@ -24,7 +24,7 @@ export default function ListingForm() {
     return (
         <div>
             <Form className='formContainer' onSubmit={onSubmit}>
-                <Row>
+                <Row className='row'>
                     <Form.Group className="col-md-6">
                         <Form.Label>Textbook Title</Form.Label>
                         <Form.Control
@@ -44,32 +44,41 @@ export default function ListingForm() {
                         />
                     </Form.Group>
                 </Row>
-                <Row>
-                    <Form.Group className="col-md-6">
+                <Row className='row'>
+                    <Form.Group className="col-md-4">
                         <Form.Label>Price</Form.Label>
-                        <Form.Control
-                            type="number"
-                            id="price"
-                            placeholder="$15.00"
-                            value={price}
-                            onChange={e => setPrice(e.target.value)}
-                        />
+                        <InputGroup>
+                            <InputGroup.Text>$</InputGroup.Text>
+                            <FormControl
+                                type="number"
+                                id="price"
+                                placeholder="$15.00"
+                                value={price}
+                                onChange={e => setPrice(e.target.value)}
+                            />
+                        </InputGroup>
                     </Form.Group>
-                    <InputGroup className="mb-3">
-                        <InputGroup.Text>$</InputGroup.Text>
-                        <FormControl type="number" />
-                    </InputGroup>
-                    <Form.Group className="col-md-6">
+                    <Form.Group className="col-md-4">
                         <Form.Label>Quality</Form.Label>
-                        <Form.Control
-                            type="number"
-                            id="quality"
-                            placeholder="Enter Quality"
-                            value={quality}
-                            onChange={e => setQuality(e.target.value)}
-                        />
+                        <InputGroup>
+                            <Form.Control
+                                type="number"
+                                id="quality"
+                                placeholder="Enter Quality"
+                                aria-describedby='qualityBlock'
+                                value={quality}
+                                onChange={e => setQuality(e.target.value)}
+                            />
+                            <InputGroup.Text>/ 10</InputGroup.Text>
+                            <Form.Text id="qualityBlock" muted>
+                                Please enter a number between 1-10.
+                                10 being brand new, 1 being not usable.
+                            </Form.Text>
+                        </InputGroup>
+
                     </Form.Group>
-                    <Form.Group className="col-md-6">
+
+                    <Form.Group className="col-md-4">
                         <Form.Label>Textbook Image</Form.Label>
                         <Form.Control
                             type="file"
@@ -80,7 +89,7 @@ export default function ListingForm() {
                         />
                     </Form.Group>
                 </Row>
-                <Row>
+                <Row className='row'>
                     <Form.Group>
                         <Form.Label>Description</Form.Label>
                         <Form.Control
