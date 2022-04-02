@@ -9,7 +9,7 @@ app = Flask(__name__)
 
 app.config.from_mapping(
     SECRET_KEY= 'secretpassword',
-    SQLALCHEMY_DATABASE_URI = 'sqlite://' + os.path.join(basedir, "appdb"),
+    SQLALCHEMY_DATABASE_URI = 'sqlite:///' + os.path.join(basedir, "app.db"),
     SQLALCHEMY_TRACK_MODIFICATIONS = False
 )
 
@@ -25,5 +25,6 @@ db = SQLAlchemy(app)
 if __name__ == "__main__":
     app.run(debug=True)
 
-
+import models
 import routes
+

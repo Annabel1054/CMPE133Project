@@ -1,5 +1,5 @@
-from flask-server.server import db
-from werkzeug_security import check_password_hash, generate_password_hash
+from server import db
+from werkzeug.security import check_password_hash, generate_password_hash
 
 class User(db.Model):
     def __init__(self, username, password):
@@ -23,7 +23,5 @@ class User(db.Model):
 
     def get_id(self):
         return self.id
-
-
 
 
