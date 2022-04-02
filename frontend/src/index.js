@@ -1,16 +1,17 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './App';
+import ListingForm from './Components/ListingForm/listingForm';
 import reportWebVitals from './reportWebVitals';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
+import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
 
 ReactDOM.render(
   <BrowserRouter>
     <React.StrictMode>
       <Switch>
-        <Route path='/'>
-          <App />
-        </Route>
+        <Route exact path='/' component={App} />
+        <Route exact path='/listingForm' component={ListingForm} />
       </Switch>
     </React.StrictMode>
   </BrowserRouter>,
