@@ -1,0 +1,37 @@
+.formContainer {
+    width: 70%;
+    margin-left: 15%;
+    margin-top: 2%;
+}
+
+.form {
+    background-color: #D3E5D2;
+    padding: 20px;
+}
+
+.row {
+    margin-bottom: 20px;
+}
+
+.background {
+    background-color: #EDF4EC;
+    height: 100vh;
+}
+
+.submitButton {
+    background-color: #6F9C74 !important;
+    color: white;
+    width: 100%;
+}
+
+.header {
+    font-size: 30px;
+    margin-left: 15%;
+    margin-top: 5%;
+    font-weight: 600;
+}
+
+.instructions {
+    margin-bottom: 15px;
+    font-weight: 600;
+}

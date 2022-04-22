@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import NavBar from './Components/Navbar/Navbar';
 
 function App() {
 
@@ -17,7 +18,8 @@ function App() {
 
   return (
     <div>
-      <div>CMPE133 Project</div>
+      <NavBar />
+      <div>CMPE133 Project HOME PAGE</div>
       {(typeof data.members === 'undefined') ? (
         <p> loading ... </p>
       ) : (
