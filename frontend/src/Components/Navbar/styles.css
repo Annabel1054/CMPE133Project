@@ -1,0 +1,15 @@
+.navlinks {
+    display: "flex";
+}
+
+/* .link {
+    textDecoration: "none",
+        color: '#363D21',
+        fontSize: "17px",
+        fontWeight: "bold",
+        marginLeft: 40,
+} */
+
+.navbar-background {
+    background-color: #5F7D5A;
+}
