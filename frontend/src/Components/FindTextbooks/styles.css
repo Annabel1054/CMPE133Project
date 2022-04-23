@@ -1,0 +1,15 @@
+.searchBar {
+    margin-top: 2%;
+    margin-left: 5%;
+    margin-right: 30%;
+    width: 40% !important;
+    margin-bottom: 2%;
+}
+
+.goButton {
+    width: 10%;
+}
+
+.dropdownButton {
+    width: 1000px;
+}
