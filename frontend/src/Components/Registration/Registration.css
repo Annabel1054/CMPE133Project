@@ -1,0 +1,30 @@
+
+.subcontainer{
+  background-color: #D3E5D2;
+  margin-top: 7%;
+  max-width: 80%;
+  max-height: 90%;
+}
+
+#content{
+    text-align: center;
+}
+#registration {
+  margin:2%;
+  font-size: large;
+  width: 500px;
+  justify-content:center;
+  align-items:center;
+  margin-left: 33%;
+  
+}
+
+.inputSty{
+  padding: 10px;
+}
+
+.btn{
+  background-color: #829A7E;
+  margin-left: 35%;
+  color: #000;
+}
