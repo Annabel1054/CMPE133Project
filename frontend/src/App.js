@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import NavBar from './Components/Navbar/Navbar';
+import Home from './Components/Homepage/Home';
 
 function App() {
 
@@ -18,15 +19,7 @@ function App() {
 
   return (
     <div>
-      <NavBar />
-      <div>CMPE133 Project HOME PAGE</div>
-      {(typeof data.members === 'undefined') ? (
-        <p> loading ... </p>
-      ) : (
-        data.members.map((member, i) => (
-          <p key={i}>{member}</p>
-        ))
-      )}
+      <Home/>
     </div>
   );
 }
