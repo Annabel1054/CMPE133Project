@@ -39,7 +39,7 @@ export default function SignUpPage() {
             </Form.Group>
             <br />
             <Form.Group >
-            <Button className ="btn" type='submit' > <b>Create Account</b></Button>
+            <Button className ="regbtn" type='submit' > <b>Create Account</b></Button>
             </Form.Group>
       </Form> 
              <br />
