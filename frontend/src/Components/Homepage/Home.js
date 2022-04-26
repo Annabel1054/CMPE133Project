@@ -9,17 +9,17 @@ import '../Homepage/Home.css';
 const Home = () => {
   return (
     <div className="page-container">
-      <NavBar/>
+      <NavBar />
       <div className="home">
-         <img src={pic7} alt ="hotel7" className='img-fluid' />
-       <div className="content">
-            <p ><h1 id="wordings"> If you are an SJSU student looking for cheaper textbook alternatives, look no further!</h1>    
-                <h1>BookCycle is a place where you can sell or buy used textbooks.</h1></p>
+        <img src={pic7} className='img-fluid' />
+        <div className="content">
+          <p ><h1 id="wordings"> If you are an SJSU student looking for cheaper textbook alternatives, look no further!</h1>
+            <h1>BookCycle is a place where you can sell or buy used textbooks.</h1></p>
+        </div>
+
+        <Footer />
       </div>
-      
-            <Footer />
-      </div>
-     
+
     </div>
   )
 }

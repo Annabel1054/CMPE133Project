@@ -12,14 +12,15 @@ export default function SignUpPage() {
     const [password, setPassword] = useState('');
     const [reenterdpasssword, setReEnterdPassword] = useState('');
 
+
     const onSubmit = (e) => {
         e.preventDefault();
         console.log("FirstName: " + firstname);
         console.log("LastName: " + lastname);
-        console.log("ISBN: " + email);
-        console.log("Quality: " + phone);
-        console.log("Image: " + password);
-        console.log("Price: " + reenterdpasssword);                                         
+        console.log("Email: " + email);
+        console.log("Phone: " + phone);
+        console.log("Password: " + password);
+        console.log("ReEnter: " + reenterdpasssword);                                         
         // Add a POST method to backend to submit textbook listing.
     }
     return (
@@ -61,9 +62,6 @@ export default function SignUpPage() {
       </Form>
       </Form> 
              <br />
-
-            
-             
             </Container>
         </div >
     );
