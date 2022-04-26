@@ -14,7 +14,7 @@ const Home = () => {
         <img src={pic7} className='img-fluid' />
         <div className="content">
           <p ><h1 id="wordings"> If you are an SJSU student looking for cheaper textbook alternatives, look no further!</h1>
-            <h1>BookCycle is a place where you can sell or buy used textbooks.</h1></p>
+            <h1 id="wordings">BookCycle is a place where you can sell or buy used textbooks.</h1></p>
         </div>
 
         <Footer />
