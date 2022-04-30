@@ -12,7 +12,7 @@ class User(db.Model):
     password_hash = db.Column(db.String(128))
 
     firstName = db.Column(db.String(64), index=True)
-    lastName = db.Column(db.String(64, index=True))
+    lastName = db.Column(db.String(64), index=True)
 
 
 
@@ -30,4 +30,13 @@ class User(db.Model):
     def get_id(self):
         return self.id
 
+'''
+    todo: 
+        add seller contact info to User
+        add textbook model
 
+        add/modify/edit textbook calls to routes
+        add user verification to routes, as well as session info
+
+
+'''
