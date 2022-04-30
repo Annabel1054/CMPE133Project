@@ -1,9 +1,9 @@
 import NavBar from "../Navbar/Navbar";
 import { useState } from 'react';
-import { Button, Form} from 'react-bootstrap';
+import { Button, Form } from 'react-bootstrap';
 import './Login.css';
 
-export default function LoginPage(){
+export default function LoginPage() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
@@ -12,36 +12,36 @@ export default function LoginPage(){
         console.log("Email: " + email);
         console.log("Password: " + password);
     }
-    return (   
-        <div class = "background">
-             <NavBar/>
-            <div class = "loginbox">
+    return (
+        <div className="background">
+            <NavBar />
+            <div className="loginbox">
                 Login
-            <Form className='formContainer' onSubmit={onSubmit}>
+                <Form className='formContainerLogin' onSubmit={onSubmit}>
                     <Form.Group>
                         <Form.Label >
-                            Account E-mail: 
+                            Account E-mail:
                         </Form.Label>
                         <Form.Control
-                            input type='text'
+                            type='text'
                             value={email}
                             onChange={e => setEmail(e.target.value)}
                             placeholder="Enter E-mail"
                         />
                     </Form.Group>
-                    <Form.Group className= "input">
+                    <Form.Group className="input">
                         <Form.Label>
-                            Password: 
+                            Password:
                         </Form.Label>
                         <Form.Control
-                            input type='password'
+                            type='password'
                             placeholder="Enter Password"
                             value={password}
                             onChange={e => setPassword(e.target.value)}
                         />
                     </Form.Group>
-                <Button type="login_button">Login</Button>
-            </Form>
+                    <Button type="login_button">Login</Button>
+                </Form>
             </div>
         </div >
     );
