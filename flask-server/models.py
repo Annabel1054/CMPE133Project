@@ -38,5 +38,30 @@ class User(db.Model):
         add/modify/edit textbook calls to routes
         add user verification to routes, as well as session info
 
-
 '''
+
+class Textbook(db.Model):
+    def __init__(self, title, author, isbn, price, courseName, imagePath, desc, quality):
+        
+        self.title = title
+        self.author = author
+        self.isbn = isbn
+        self.price = price
+        self.courseName = courseName
+        self.imagePath = imagePath
+        self.desc = desc
+        self.quality = quality
+
+
+    id = db.Column(db.Integer, primary_key=True)
+
+    title = db.Column(db.String(64), index=True)
+    author = db.Column(db.String(64), index=True)
+    isbn = db.Column(db.String(64), index=True)
+    price = db.Column(db.String(64), index=True)
+    courseName = db.Column(db.String(64), index=True)
+    imageName = db.Column(db.String(64), index=True)
+
+    desc = db.Column(db.String(5092), index=True)
+    quality = db.Column(db.String(64), index=True)
+
