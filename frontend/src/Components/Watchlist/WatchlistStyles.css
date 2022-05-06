@@ -1,0 +1,35 @@
+
+
+.card {
+    flex-direction: row !important;
+    
+}
+
+.card img {
+    /* width: 22%; 
+    height: auto; */
+    width: 210px;
+    height: 260px;
+}
+
+.price {
+    font-size: 30px;
+    color: #095203;
+    float: right;
+    margin-top: 60px;
+}
+
+.rightSection {
+    float: right;
+}
+
+.sellerName {
+    color: #606060;
+    font-size: 18px;
+    text-align: right;
+}
+
+.maindiv{
+    background-color: #D3E5D2;
+}
+
