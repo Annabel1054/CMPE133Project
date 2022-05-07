@@ -46,6 +46,34 @@ export default function SignUpPage() {
         console.log("Password: " + password);
         console.log("ReEnter: " + reenterdpasssword);
         // Add a POST method to backend to create user.
+
+        let userData = {
+            email: email,
+            password: password,
+            firstName: firstname,
+            lastName: lastname,
+            // phoneNum: phone,
+        }
+
+        if (password === reenterdpasssword) {
+            fetch("/register_user", {
+                method: 'POST',
+                body: JSON.stringify(userData),
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
+                .then(data => {
+                    if (data.status !== 200)
+                        alert("Having error")
+                    else {
+                        window.location.replace("/login");
+                        console.log("Successfully created account!");
+                    }
+                })
+        } else {
+            console.log("Please make sure your passwords are matching.")
+        }
     }
     return (
         <div>
