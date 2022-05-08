@@ -1,5 +1,5 @@
 from server import app, db
-from flask import request
+from flask import request, jsonify
 from werkzeug.utils import secure_filename
 from models import *
 from flask_login import login_user
@@ -11,7 +11,8 @@ def members():
 @app.route("/register_user", methods=["GET", "POST"])
 def register():
 
-    userRegisterData = request.form.to_dict()
+    userRegisterData = request.get_json()
+    print(userRegisterData)
 
     if request.method == "POST":
         user = User(userRegisterData["email"], userRegisterData["password"], userRegisterData["firstName"], userRegisterData["lastName"])
@@ -19,6 +20,8 @@ def register():
         if user is not None:
             db.session.add(user)
             db.session.commit()
+
+        return jsonify("Sended")
 
 @app.route("/login_user", methods=["POST"])
 def login():

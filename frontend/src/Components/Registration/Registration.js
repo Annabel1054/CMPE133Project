@@ -71,6 +71,9 @@ export default function SignUpPage() {
                         console.log("Successfully created account!");
                     }
                 })
+		.catch(function (error) {
+        		console.log("Fetch error: " + error);
+      		});
         } else {
             console.log("Please make sure your passwords are matching.")
         }
