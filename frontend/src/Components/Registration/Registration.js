@@ -56,7 +56,7 @@ export default function SignUpPage() {
         }
 
         if (password === reenterdpasssword) {
-            fetch("/register_user", {
+            fetch("http://127.0.0.1:5000/register_user", {
                 method: 'POST',
                 body: JSON.stringify(userData),
                 headers: {
