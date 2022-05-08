@@ -16,7 +16,7 @@ export default function LoginPage() {
         <div className="background">
             <NavBar />
             <div className="loginbox">
-                Login
+                LOGIN
                 <Form className='formContainerLogin' onSubmit={onSubmit}>
                     <Form.Group>
                         <Form.Label >
@@ -26,7 +26,7 @@ export default function LoginPage() {
                             type='text'
                             value={email}
                             onChange={e => setEmail(e.target.value)}
-                            placeholder="Enter E-mail"
+                            placeholder="Enter SJSU E-mail"
                         />
                     </Form.Group>
                     <Form.Group className="input">
