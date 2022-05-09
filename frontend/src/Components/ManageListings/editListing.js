@@ -2,17 +2,25 @@ import { useState } from 'react';
 import { Button, Row, Form, InputGroup, FormControl } from 'react-bootstrap';
 import './styles.css';
 import NavBarLoggedIn from '../Navbar/LoggedInNavbar';
+import { useHistory, useLocation } from "react-router-dom";
 
-export default function ListingForm() {
-    const [title, setTitle] = useState('');
-    const [isbn, setIsbn] = useState('');
-    const [author, setAuthor] = useState('');
-    const [course, setCourse] = useState('');
-    const [quality, setQuality] = useState('Excellent');
+export default function EditListing() {
+    const location = useLocation();
+
+    const [title, setTitle] = useState(location.state.title);
+    const [isbn, setIsbn] = useState(location.state.isbn);
+    const [author, setAuthor] = useState(location.state.author);
+    const [course, setCourse] = useState(location.state.course);
+    const [quality, setQuality] = useState(location.state.quality);
     const [image, setImage] = useState('');
-    const [price, setPrice] = useState(0);
-    const [originalPrice, setOriginalPrice] = useState(0);
-    const [description, setDescription] = useState('');
+    const [price, setPrice] = useState(location.state.price);
+    const [originalPrice, setOriginalPrice] = useState(location.state.originalPrice);
+    const [description, setDescription] = useState(location.state.description);
+
+    const history = useHistory();
+    const navigateToManageListings = () => {
+        history.push('/manageListings');
+    };
 
     const onSubmit = (e) => {
         e.preventDefault();
@@ -25,13 +33,16 @@ export default function ListingForm() {
         console.log("Description: " + description);
         console.log("Author Name: " + author);
         console.log("Course Name: " + course);
-        // Add a POST method to backend to submit textbook listing.
+        // Add a POST method to backend to edit textbook listing.
     }
 
     return (
         <div className="background">
             <NavBarLoggedIn />
-            <div className="header">Create Listing</div>
+            <Button className="backToManageListingsButton" onClick={navigateToManageListings}>
+                Back to Manage Listings
+            </Button>
+            <div className="editListingHeader">Edit Listing</div>
             <div className='formContainer'>
                 <div className="instructions">Please fill out this form to advertise your textbook!</div>
                 <Form className='form' onSubmit={onSubmit}>
@@ -133,7 +144,7 @@ export default function ListingForm() {
                             </Form.Select>
                         </Form.Group>
                     </Row>
-                    <Button className="submitButton" type="submit">Submit Textbook</Button>
+                    <Button className="submitButton" type="submit">Update Textbook</Button>
                 </Form>
             </div>
         </div >
