@@ -8,9 +8,10 @@ export default function ListingForm() {
     const [isbn, setIsbn] = useState('');
     const [author, setAuthor] = useState('');
     const [course, setCourse] = useState('');
-    const [quality, setQuality] = useState('');
+    const [quality, setQuality] = useState('Excellent');
     const [image, setImage] = useState('');
     const [price, setPrice] = useState(0);
+    const [originalPrice, setOriginalPrice] = useState(0);
     const [description, setDescription] = useState('');
 
     const onSubmit = (e) => {
@@ -20,6 +21,7 @@ export default function ListingForm() {
         console.log("Quality: " + quality);
         console.log("Image: " + image);
         console.log("Price: " + price);
+        console.log("Original Price: " + originalPrice);
         console.log("Description: " + description);
         console.log("Author Name: " + author);
         console.log("Course Name: " + course);
@@ -63,16 +65,29 @@ export default function ListingForm() {
                         </Form.Group>
                     </Row>
                     <Row className='row'>
-                        <Form.Group className="col-md-4">
+                        <Form.Group className="col-md-2">
                             <Form.Label>Price</Form.Label>
                             <InputGroup>
                                 <InputGroup.Text>$</InputGroup.Text>
                                 <FormControl
                                     type="number"
                                     id="price"
-                                    placeholder="$15.00"
+                                    placeholder="15.00"
                                     value={price}
                                     onChange={e => setPrice(e.target.value)}
+                                />
+                            </InputGroup>
+                        </Form.Group>
+                        <Form.Group className="col-md-2">
+                            <Form.Label>Original Price</Form.Label>
+                            <InputGroup>
+                                <InputGroup.Text>$</InputGroup.Text>
+                                <FormControl
+                                    type="number"
+                                    id="originalPrice"
+                                    placeholder="35.00"
+                                    value={originalPrice}
+                                    onChange={e => setOriginalPrice(e.target.value)}
                                 />
                             </InputGroup>
                         </Form.Group>
@@ -110,7 +125,13 @@ export default function ListingForm() {
                         </Form.Group>
                         <Form.Group className="col-md-4">
                             <Form.Label>Quality</Form.Label>
-                            <InputGroup>
+                            <Form.Select onChange={e => setQuality(e.target.value)} aria-label="Default select example">
+                                <option value="Excellent">Excellent</option>
+                                <option value="Good">Good</option>
+                                <option value="Okay">Okay</option>
+                                <option value="Not Great">Not Great</option>
+                            </Form.Select>
+                            {/* <InputGroup>
                                 <Form.Control
                                     type="number"
                                     id="quality"
@@ -124,7 +145,7 @@ export default function ListingForm() {
                                     Please enter a number between 1-10.
                                     10 being brand new, 1 being not usable.
                                 </Form.Text>
-                            </InputGroup>
+                            </InputGroup> */}
                         </Form.Group>
                     </Row>
                     <Button className="submitButton" type="submit">Submit Textbook</Button>
