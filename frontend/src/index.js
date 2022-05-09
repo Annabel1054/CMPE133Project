@@ -6,6 +6,7 @@ import LoginPage from './Components/Login/Login';
 import SignUpPage from './Components/Registration/Registration';
 import FindTextbooks from './Components/FindTextbooks/findTextbooks';
 import ManageListings from './Components/ManageListings/manageListings';
+import EditListing from './Components/ManageListings/editListing';
 import Watchlist from './Components/Watchlist/watchlist';
 import reportWebVitals from './reportWebVitals';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
@@ -13,17 +14,16 @@ import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
 
 ReactDOM.render(
   <BrowserRouter>
-    <React.StrictMode>
-      <Switch>
-        <Route exact path='/' component={App} />
-        <Route exact path='/listingForm' component={ListingForm} />
-        <Route exact path='/login' component={LoginPage} />
-        <Route exact path='/signup' component={SignUpPage} />
-        <Route exact path='/findTextbooks' component={FindTextbooks} />
-        <Route exact path='/manageListings' component={ManageListings} />
-        <Route exact path='/watchlist' component={Watchlist} />
-      </Switch>
-    </React.StrictMode>
+    <Switch>
+      <Route exact path='/' component={App} />
+      <Route exact path='/createListing' component={ListingForm} />
+      <Route exact path='/login' component={LoginPage} />
+      <Route exact path='/signup' component={SignUpPage} />
+      <Route exact path='/findTextbooks' component={FindTextbooks} />
+      <Route exact path='/manageListings' component={ManageListings} />
+      <Route exact path='/editListing' component={EditListing} />
+      <Route exact path='/watchlist' component={Watchlist} />
+    </Switch>
   </BrowserRouter>,
   document.getElementById('root')
 );

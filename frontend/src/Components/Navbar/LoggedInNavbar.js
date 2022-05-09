@@ -13,7 +13,7 @@ export default function NavBarLoggedIn() {
                     <Nav>
                         <Nav.Link href="/findTextbooks">Find Textbooks</Nav.Link>
                         <Nav.Link href="/manageListings">Manage Listings</Nav.Link>
-                        <Nav.Link href="/listingForm">Create Listing</Nav.Link>
+                        <Nav.Link href="/createListing">Create Listing</Nav.Link>
                         <Nav.Link href="/watchlist">Watchlist</Nav.Link>
                         <Nav.Link href="/">Logout</Nav.Link>
                     </Nav>
