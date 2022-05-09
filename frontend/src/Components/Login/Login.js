@@ -16,17 +16,17 @@ export default function LoginPage() {
         <div className="background">
             <NavBar />
             <div className="loginbox">
-                LOGIN
+                <div className="loginHeader">LOGIN</div>
                 <Form className='formContainerLogin' onSubmit={onSubmit}>
                     <Form.Group>
                         <Form.Label >
-                            Account E-mail:
+                            SJSU Email:
                         </Form.Label>
                         <Form.Control
                             type='text'
                             value={email}
                             onChange={e => setEmail(e.target.value)}
-                            placeholder="Enter SJSU E-mail"
+                            placeholder="Enter SJSU Email"
                         />
                     </Form.Group>
                     <Form.Group className="input">
