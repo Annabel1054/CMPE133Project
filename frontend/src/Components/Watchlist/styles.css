@@ -19,14 +19,19 @@
     color: #095203;
     float: right;
     margin-top: 60px;
+    
+    
 }
 
 .rightSection {
     float: right;
+    margin-left: 200px;
+    text-align: left;
 }
 
 .sellerName {
-    color: #606060;
+    background-color: #FFFF;
     font-size: 18px;
+    margin-left: 90px;
     text-align: right;
 }

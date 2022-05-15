@@ -25,6 +25,12 @@
 
 .regbtn{
   background-color: #829A7E;
-  margin-left: 39%;
+  margin-left: 45%;
   color: #000;
+}
+
+.error{
+  color: rgb(222, 17, 17);
+  margin-left: 35%;
+  margin-top: 1%;
 }

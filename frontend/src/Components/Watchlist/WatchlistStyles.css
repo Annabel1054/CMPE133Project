@@ -17,6 +17,13 @@
     color: #095203;
     float: right;
     margin-top: 60px;
+   
+}
+
+.oldPrice{
+    font-size: 20px;
+    margin-top: 30px;
+    margin-left: 20px;
 }
 
 .rightSection {

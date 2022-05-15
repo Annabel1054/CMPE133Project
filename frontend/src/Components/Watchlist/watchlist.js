@@ -5,7 +5,7 @@ import './styles.css';
 import WatchlistListing from "./WatchlistListing";
 
 
-export default function Watchlist() {
+export default function WatchList() {
     
     return (
         <div className="maindiv">
@@ -15,9 +15,10 @@ export default function Watchlist() {
                 title="Calculus"
                 author="Larson Hostetler Edwards"
                 isbn="9809238423"
-                quality="9"
+                quality="Good"
                 course="MATH31"
                 description="This textbook is new."
+                oldPrice ="100"
                 price="87"
                 name="John Doe"
             />
