@@ -1,0 +1,24 @@
+.popup{
+    width:80%;
+    height: 30vh;
+    background-color: #5F7D5A;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.subdiv{
+    position: relative;
+    padding: 30px;
+    width: 100%;
+    background-color: rgb(1, 9, 16);
+}
+
+.close{
+    position:absolute;
+    top: 16px;
+    right: 16px;
+    background-color: #5F7D5A;
+    
+
+}

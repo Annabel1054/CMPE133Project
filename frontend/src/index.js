@@ -7,7 +7,7 @@ import SignUpPage from './Components/Registration/Registration';
 import FindTextbooks from './Components/FindTextbooks/findTextbooks';
 import ManageListings from './Components/ManageListings/manageListings';
 import EditListing from './Components/ManageListings/editListing';
-import Watchlist from './Components/Watchlist/watchlist';
+import Watchlist from './Components/Watchlist/Watchlist';
 import reportWebVitals from './reportWebVitals';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
