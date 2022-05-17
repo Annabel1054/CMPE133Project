@@ -1,10 +1,15 @@
 from server import db
 from werkzeug.security import check_password_hash, generate_password_hash
+from server import login_manager
+
 
 class User(db.Model):
-    def __init__(self, email, password, firstName, lastName):
+    def __init__(self, email, password, firstName, lastName, phoneNum):
         self.email = email
         self.set_password(password)
+        self.firstName = firstName
+        self.lastName = lastName
+        self.phoneNum = phoneNum
 
     id = db.Column(db.Integer, primary_key=True)
 
@@ -14,8 +19,9 @@ class User(db.Model):
     firstName = db.Column(db.String(64), index=True)
     lastName = db.Column(db.String(64), index=True)
 
+    phoneNum = db.Column(db.String(64), index=True)
 
-
+    textbooks = db.relationship("Textbook", backref="user")
 
     def set_password(self, password):
         self.password_hash = generate_password_hash(password)
@@ -30,6 +36,7 @@ class User(db.Model):
     def get_id(self):
         return self.id
 
+
 '''
     todo: 
         add seller contact info to User
@@ -40,18 +47,19 @@ class User(db.Model):
 
 '''
 
+
 class Textbook(db.Model):
-    def __init__(self, title, author, isbn, price, courseName, imagePath, desc, quality):
-        
+    def __init__(self, title, author, isbn, price, originalPrice, courseName, image, description, quality):
+
         self.title = title
         self.author = author
         self.isbn = isbn
         self.price = price
+        self.originalPrice = originalPrice
         self.courseName = courseName
-        self.imagePath = imagePath
-        self.desc = desc
+        self.image = image
+        self.description = description
         self.quality = quality
-
 
     id = db.Column(db.Integer, primary_key=True)
 
@@ -59,9 +67,16 @@ class Textbook(db.Model):
     author = db.Column(db.String(64), index=True)
     isbn = db.Column(db.String(64), index=True)
     price = db.Column(db.String(64), index=True)
+    originalPrice = db.Column(db.String(64), index=True)
     courseName = db.Column(db.String(64), index=True)
-    imageName = db.Column(db.String(64), index=True)
+    image = db.Column(db.String(64), index=True)
 
-    desc = db.Column(db.String(5092), index=True)
+    description = db.Column(db.String(5092), index=True)
     quality = db.Column(db.String(64), index=True)
 
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+
+
+@login_manager.user_loader
+def load_user(user_id):
+    return User.get(user_id)
