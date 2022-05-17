@@ -1,29 +1,26 @@
-
-
 .card {
     flex-direction: row !important;
-    
 }
 
 .card img {
-    /* width: 22%; 
-    height: auto; */
     width: 210px;
     height: 260px;
 }
 
-.price {
+.sellingPrice {
     font-size: 30px;
     color: #095203;
     float: right;
-    margin-top: 60px;
-   
 }
 
-.oldPrice{
+.oldPrice {
     font-size: 20px;
     margin-top: 30px;
     margin-left: 20px;
+}
+
+.watchlistContainer {
+    margin-top: 2%;
 }
 
 .rightSection {
@@ -36,7 +33,22 @@
     text-align: right;
 }
 
-.maindiv{
+.closeButton {
+    margin-left: 100px;
+}
+
+.maindiv {
+    min-height: 100vh;
     background-color: #D3E5D2;
 }
 
+.listingContainer {
+    margin-left: 15%;
+}
+
+.watchlistHeader {
+    font-size: 30px;
+    margin-left: 15%;
+    font-weight: 600;
+    margin-bottom: 20px;
+}

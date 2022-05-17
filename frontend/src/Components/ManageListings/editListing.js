@@ -138,7 +138,7 @@ export default function EditListing() {
                             <Form.Label>Quality</Form.Label>
                             <Form.Select onChange={e => setQuality(e.target.value)} aria-label="Default select example">
                                 <option value="Excellent">Excellent</option>
-                                <option value="Good">Good</option>
+                                <option value="Great">Great</option>
                                 <option value="Okay">Okay</option>
                                 <option value="Not Great">Not Great</option>
                             </Form.Select>
