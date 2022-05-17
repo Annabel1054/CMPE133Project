@@ -26,6 +26,35 @@ export default function ListingForm() {
         console.log("Author Name: " + author);
         console.log("Course Name: " + course);
         // Add a POST method to backend to submit textbook listing.
+
+        let listingData = {
+            title: title,
+            author: author,
+            isbn: isbn,
+            price: price,
+            courseName: course,
+            imagePath: image,
+            desc: description,
+            quality: quality,
+        }
+
+        fetch("http://127.0.0.1:5000/create_new_listing", {
+            method: 'POST',
+            body: JSON.stringify(listingData),
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+            .then(data => {
+                if (data.status !== 200)
+                    alert("Having error")
+                else {
+                    console.log("Successfully created a textbook listing!");
+                }
+            })
+            .catch(function (error) {
+                console.log("Fetch error: " + error);
+            });
     }
 
     return (

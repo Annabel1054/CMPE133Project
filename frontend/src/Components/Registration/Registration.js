@@ -26,7 +26,7 @@ export default function SignUpPage() {
         }
 
         if (valid === true) {
-            onSubmit();
+            onSubmit(e);
         }
     }
     const [firstname, setFirstname] = useState('');
@@ -46,6 +46,37 @@ export default function SignUpPage() {
         console.log("Password: " + password);
         console.log("ReEnter: " + reenterdpasssword);
         // Add a POST method to backend to create user.
+
+        let userData = {
+            email: email,
+            password: password,
+            firstName: firstname,
+            lastName: lastname,
+            // phoneNum: phone,
+        }
+
+        if (password === reenterdpasssword) {
+            fetch("http://127.0.0.1:5000/register_user", {
+                method: 'POST',
+                body: JSON.stringify(userData),
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
+                .then(data => {
+                    if (data.status !== 200)
+                        alert("Having error")
+                    else {
+                        window.location.replace("/login");
+                        console.log("Successfully created account!");
+                    }
+                })
+                .catch(function (error) {
+                    console.log("Fetch error: " + error);
+                });
+        } else {
+            console.log("Please make sure your passwords are matching.")
+        }
     }
     return (
         <div>
@@ -90,7 +121,7 @@ export default function SignUpPage() {
                     </Row>
                     <br />
                     <Form.Group className="regbtngroup">
-                        <Button onClick={validate} className="regbtn" type='submit'> <b>Create Account</b></Button>
+                        <Button className="regbtn" type='submit'> <b>Create Account</b></Button>
                     </Form.Group>
                     {emailErr && <p className="error">Your email is invalid, please enter a SJSU email.</p>}
                     {passwordErr && <p className="error">Please make sure your passwords are matching.</p>}
