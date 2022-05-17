@@ -12,6 +12,8 @@ export default function SignUpPage() {
     const validate = (e) => {
         e.preventDefault();
         let valid = true;
+        setEmailErr(false);
+        setPasswordErr(false);
 
         if (!validEmail.test(email)) {
             setEmailErr(true);
@@ -24,8 +26,6 @@ export default function SignUpPage() {
         }
 
         if (valid === true) {
-            setEmailErr(false);
-            setPasswordErr(false);
             onSubmit();
         }
     }
