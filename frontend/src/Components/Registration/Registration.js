@@ -52,7 +52,7 @@ export default function SignUpPage() {
             password: password,
             firstName: firstname,
             lastName: lastname,
-            // phoneNum: phone,
+            phoneNum: phone,
         }
 
         if (password === reenterdpasssword) {
@@ -60,7 +60,8 @@ export default function SignUpPage() {
                 method: 'POST',
                 body: JSON.stringify(userData),
                 headers: {
-                    'Content-Type': 'application/json'
+                    'Content-Type': 'application/json',
+                    'Access-Control-Allow-Origin': '*'
                 }
             })
                 .then(data => {

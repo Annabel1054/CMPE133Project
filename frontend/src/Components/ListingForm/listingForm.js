@@ -9,17 +9,33 @@ export default function ListingForm() {
     const [author, setAuthor] = useState('');
     const [course, setCourse] = useState('');
     const [quality, setQuality] = useState('Excellent');
-    const [image, setImage] = useState('');
+    const [image, setImage] = useState();
+    const [imageName, setImageName] = useState();
     const [price, setPrice] = useState(0);
     const [originalPrice, setOriginalPrice] = useState(0);
     const [description, setDescription] = useState('');
 
+    const printImage = (e) => {
+        // console.log(e.target.files[0]);
+        // const data = new FormData();
+        // data.append('file', this.uploadInput.files[0]);
+        // data.append('filename', this.fileName.value);
+        setImage(e.target.files[0]);
+        setImageName(e.target.value);
+    }
+
     const onSubmit = (e) => {
         e.preventDefault();
+
+        const data = new FormData();
+        data.append('file', image);
+        console.log(image);
+        console.log(data);
+
         console.log("Textbook title: " + title);
         console.log("ISBN: " + isbn);
         console.log("Quality: " + quality);
-        console.log("Image: " + image);
+        console.log("Image: " + data);
         console.log("Price: " + price);
         console.log("Original Price: " + originalPrice);
         console.log("Description: " + description);
@@ -32,9 +48,10 @@ export default function ListingForm() {
             author: author,
             isbn: isbn,
             price: price,
-            courseName: course,
-            imagePath: image,
-            desc: description,
+            originalPrice: originalPrice,
+            course: course,
+            // file: image,
+            description: description,
             quality: quality,
         }
 
@@ -135,8 +152,9 @@ export default function ListingForm() {
                                 type="file"
                                 accept="image/*"
                                 id="textbookImage"
-                                value={image}
-                                onChange={e => setImage(e.target.value)}
+                                value={imageName}
+                                onChange={e => printImage(e)}
+                            // onChange={e => setImage(e.target.value)}
                             />
                         </Form.Group>
                     </Row>
