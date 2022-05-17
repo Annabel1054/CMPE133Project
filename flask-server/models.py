@@ -1,6 +1,6 @@
-from server import db
+from server import db, app
 from werkzeug.security import check_password_hash, generate_password_hash
-from server import login_manager
+from flask_login import LoginManager
 
 
 class User(db.Model):
@@ -76,6 +76,9 @@ class Textbook(db.Model):
 
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
 
+
+login_manager = LoginManager()
+login_manager.init_app(app)
 
 @login_manager.user_loader
 def load_user(user_id):

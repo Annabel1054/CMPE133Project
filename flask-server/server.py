@@ -1,11 +1,9 @@
-import routes
-import models
 from flask import Flask
 from flask_cors import CORS
 import os
 
 from flask_sqlalchemy import SQLAlchemy
-from flask_login import LoginManager
+
 
 basedir = os.path.abspath(os.path.dirname(__file__))
 app = Flask(__name__)
@@ -23,6 +21,8 @@ app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 db = SQLAlchemy(app)
 
+import models
+import routes
 
 if __name__ == "__main__":
     app.run(debug=True)
