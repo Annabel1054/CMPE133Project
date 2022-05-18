@@ -168,10 +168,19 @@ def modify_listing():
     db.session.commit()
     return jsonify("Sended")
 
+
 @app.route("/receive_image", methods=["POST"])
 def receive_image():
-    if request.files:
-        print(files)
+    if 'file' not in request.files:
+        print('no file found')
+    # if request.get_json():
+    # print(request.get_json()["image"])
+    # print(request.files.get('image'))
+    file = request.files.getlist('file')
+    print(file)
+
+    return jsonify("GOT YO PIC")
+
 
 def textbook_array_to_json(textbooks):
     jsonTextbooks = "{ \"textbooks\" :[ "
