@@ -31,7 +31,7 @@ class User(db.Model):
     phoneNum = db.Column(db.String(64), index=True)
 
     textbooks = db.relationship(
-        "Textbook", secondary=watchlists_association_table, backref="User")
+        "Textbook", secondary=watchlists_association_table, back_populates="users")
 
     def set_password(self, password):
         self.password = password
@@ -80,7 +80,7 @@ class Textbook(db.Model):
     __tablename__ = 'Textbook'
 
     users = db.relationship(
-        "User", secondary=watchlists_association_table, backref="Textbook")
+        "User", secondary=watchlists_association_table, back_populates="textbooks")
 
     id = db.Column(db.Integer, primary_key=True)
 
