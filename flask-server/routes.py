@@ -75,6 +75,7 @@ def manage_listings():
     for t in textbooks:
         if t != textbooks[-1]:
             jsonTextbooks = jsonTextbooks + "{" + \
+                "\"id\": \"" + "{t.id}" + "\"," + \
                 "\"email\": \"" + t.email + "\"," + \
                 "\"title\": \"" + t.title + "\"," + \
                 "\"author\": \"" + t.author + "\"," + \
@@ -87,6 +88,7 @@ def manage_listings():
                 "\"},"
         else:
             jsonTextbooks = jsonTextbooks + "{" + \
+                "\"id\": \"" + "{t.id}" + "\"," + \
                 "\"email\": \"" + t.email + "\"," + \
                 "\"title\": \"" + t.title + "\"," + \
                 "\"author\": \"" + t.author + "\"," + \
