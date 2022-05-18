@@ -75,7 +75,7 @@ export default function WatchlistListing(props) {
                     <Modal.Title>Contact the seller to purchase '{title}' </Modal.Title>
                 </Modal.Header>
                 <Modal.Body>Seller Name: {name}</Modal.Body>
-                <Modal.Body>Contact Number: {phoneNum}</Modal.Body>
+                <Modal.Body>Contact Number: ({phoneNum.substring(0, 3)}){phoneNum.substring(3, 6)}-{phoneNum.substring(6, 10)}</Modal.Body>
                 <Modal.Body>Contact Email: {sellerEmail}</Modal.Body>
             </Modal>
         </div>

@@ -59,6 +59,7 @@ export default function ManageListings() {
                         originalPrice={listing.originalPrice}
                         id={listing.id}
                         email={email}
+                        buyers={listing.buyers}
                     />
                 ))
             )}

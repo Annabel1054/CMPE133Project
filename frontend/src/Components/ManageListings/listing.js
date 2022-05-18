@@ -4,7 +4,21 @@ import './styles.css';
 import { useHistory, useLocation } from "react-router-dom";
 
 export default function Listing(props) {
-    const { title, isbn, author, price, quality, description, course, originalPrice, id, email } = props;
+    const { title, isbn, author, price, quality, description, course, originalPrice, id, email, buyers } = props;
+    console.log(buyers[0])
+    let buyerStrings = []
+    buyers.map((buyer, i) => {
+        console.log(buyer.buyerEmail)
+        console.log(buyer.buyerFirstName)
+        console.log(buyer.buyerLastName)
+        console.log(buyer.buyerPhoneNum)
+        buyerStrings[i] = buyer.buyerEmail
+    })
+
+    console.log(buyerStrings)
+    buyerStrings.map((bstring) => {
+        console.log(bstring)
+    })
 
     const history = useHistory();
 
@@ -63,20 +77,24 @@ export default function Listing(props) {
                         {description}
                     </Card.Text>
                     <Card.Text>
-                        INTERESTED BUYERS:
-                        name of buyer - email
+                        {buyers.length != 0 && (
+                            <p> Interested Buyers: </p>
+                        )}
+                        {buyers.map((buyer) => (
+                            <p>{buyer.buyerFirstName} {buyer.buyerLastName} | {buyer.buyerEmail} | ({buyer.buyerPhoneNum.substring(0, 3)}){buyer.buyerPhoneNum.substring(3, 6)}-{buyer.buyerPhoneNum.substring(6, 10)}</p>
+                        ))}
                     </Card.Text>
                 </Card.Body>
                 <Card.Body className="rightSection">
-                    <Card.Text className="sellerName">Original: ${originalPrice}</Card.Text>
+                    <Card.Text className="sellerName">Interested Buyers: {buyers.length}</Card.Text>
                     <div>
+                        <Card.Text className="sellerName">Original: ${originalPrice}</Card.Text>
                         <Card.Text className="price">${price}</Card.Text>
-
                     </div>
                     <Button className='listingButtons' onClick={editClick} style={{ width: '150px', backgroundColor: '#829A7E' }} variant="primary">Edit Listing</Button>
                     <Button className='listingButtons' onClick={markAsSold} style={{ width: '150px', backgroundColor: '#829A7E' }} variant="primary">Mark as Sold</Button>
                 </Card.Body>
             </Card>
-        </div>
+        </div >
     );
 }
