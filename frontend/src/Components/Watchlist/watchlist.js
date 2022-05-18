@@ -31,6 +31,7 @@ export default function WatchList() {
                     }
                 }).then(data => {
                     setWatclistListings(data);
+                    console.log(data);
                 })
                 .catch(function (error) {
                     console.log("Fetch error: " + error);
@@ -60,6 +61,8 @@ export default function WatchList() {
                             oldPrice={listing.originalPrice}
                             id={listing.id}
                             email={listing.email}
+                            name={listing.firstName + " " + listing.lastName}
+                            phoneNum={listing.phoneNum}
                         />
                     ))
                 )}

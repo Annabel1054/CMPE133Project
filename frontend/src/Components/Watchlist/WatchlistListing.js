@@ -8,7 +8,7 @@ import { useState } from "react";
 
 
 export default function WatchlistListing(props) {
-    const { title, isbn, author, price, oldPrice, quality, description, course, name } = props;
+    const { title, isbn, author, price, oldPrice, quality, description, course, name, phoneNum, email } = props;
 
     const [buttonpopup, setbuttonpopup] = useState(false);
     const [show, setShow] = useState(false);
@@ -41,11 +41,11 @@ export default function WatchlistListing(props) {
             </Card>
             <Modal size="lg" centered show={show} onHide={handleClose}>
                 <Modal.Header closeButton>
-                    <Modal.Title>Contact the seller to purchase _____: </Modal.Title>
+                    <Modal.Title>Contact the seller to purchase '{title}' </Modal.Title>
                 </Modal.Header>
-                <Modal.Body>Seller Name: </Modal.Body>
-                <Modal.Body>Contact Number: </Modal.Body>
-                <Modal.Body>Contact Email: </Modal.Body>
+                <Modal.Body>Seller Name: {name}</Modal.Body>
+                <Modal.Body>Contact Number: {phoneNum}</Modal.Body>
+                <Modal.Body>Contact Email: {email}</Modal.Body>
             </Modal>
         </div>
     );
