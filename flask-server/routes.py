@@ -3,6 +3,7 @@ from flask import request, jsonify
 from werkzeug.utils import secure_filename
 from models import *
 from flask_login import login_user, current_user
+import json
 
 
 @app.route("/members")
@@ -36,13 +37,12 @@ def login():
 
         user = User.query.filter_by(email=email).first()
         print(user)
-        
+
         if user is None or not user.check_password(password):
             print("User not found!")
             return jsonify("No user found")
         else:
             print("User found! logging in...")
-
 
         login_user(user)
 
@@ -60,8 +60,6 @@ def new_textbook():
     db.session.add(textbook)
     db.session.commit()
 
-
-
     return jsonify("Sended")
 
 
@@ -70,10 +68,40 @@ def manage_listings():
 
     listingsData = request.get_json()
 
-    textbooks = Textbook.query.filter(Textbook.name.like(listingsData["email"])).filter(Textbook.available.like("1"))
+    textbooks = Textbook.query.filter(Textbook.email.like(
+        listingsData["email"])).filter(Textbook.available.like("1")).all()
 
-    return jsonify(textbooks)
-    
+    jsonTextbooks = "{ \"textbooks\" :[ "
+    for t in textbooks:
+        if t != textbooks[-1]:
+            jsonTextbooks = jsonTextbooks + "{" + \
+                "\"email\": \"" + t.email + "\"," + \
+                "\"title\": \"" + t.title + "\"," + \
+                "\"author\": \"" + t.author + "\"," + \
+                "\"isbn\": \"" + t.isbn + "\"," + \
+                "\"price\": \"" + t.price + "\"," + \
+                "\"originalPrice\": \"" + t.originalPrice + "\"," + \
+                "\"courseName\": \"" + t.courseName + "\"," + \
+                "\"description\": \"" + t.description + "\"," + \
+                "\"quality\": \"" + t.quality + \
+                "\"},"
+        else:
+            jsonTextbooks = jsonTextbooks + "{" + \
+                "\"email\": \"" + t.email + "\"," + \
+                "\"title\": \"" + t.title + "\"," + \
+                "\"author\": \"" + t.author + "\"," + \
+                "\"isbn\": \"" + t.isbn + "\"," + \
+                "\"price\": \"" + t.price + "\"," + \
+                "\"originalPrice\": \"" + t.originalPrice + "\"," + \
+                "\"courseName\": \"" + t.courseName + "\"," + \
+                "\"description\": \"" + t.description + "\"," + \
+                "\"quality\": \"" + t.quality + \
+                "\"}"
+
+    jsonTextbooks = jsonTextbooks + "]}"
+    print(jsonTextbooks)
+    return jsonTextbooks
+
 
 @app.route("/find_listings", methods=["GET"])
 def find_listings():
