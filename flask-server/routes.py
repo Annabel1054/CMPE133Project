@@ -54,8 +54,10 @@ def new_textbook():
 
     newTextbookData = request.get_json()
 
+    user = User.query.filter_by(email=email).first()
+
     textbook = Textbook(newTextbookData["email"], newTextbookData["title"], newTextbookData["author"], newTextbookData["isbn"], newTextbookData["price"], newTextbookData["originalPrice"],
-                        newTextbookData["course"], 'temp image', newTextbookData["description"], newTextbookData["quality"])
+                        newTextbookData["course"], 'temp image', newTextbookData["description"], newTextbookData["quality"], user.name, user.phoneNum)
 
     db.session.add(textbook)
     db.session.commit()
@@ -97,6 +99,26 @@ def find_listings():
             textbooks = Textbook.query.all()
 
         return textbook_array_to_json(textbooks)
+
+
+@app.route("/modify_listing", methods=["POST"])
+def modify_listing():
+    modifiedTextbookData = request.get_json()
+    textbookToModify = Textbook.query.filter_by(id=int(modifiedTextbookData["id"])).first()
+    
+    textbookToModify.email = modifiedTextbookData["email"]
+    textbookToModify.title = modifiedTextbookData["title"]
+    textbookToModify.author = modifiedTextbookData["author"]
+    textbookToModify.isbn = modifiedTextbookData["isbn"]
+    textbookToModify.price = modifiedTextbookData["price"]
+    textbookToModify.originalPrice = modifiedTextbookData["originalPrice"]
+    textbookToModify.course = modifiedTextbookData["course"]
+    textbookToModify.description = modifiedTextbookData["description"]
+    textbookToModify.quality = modifiedTextbookData["quality"]
+    textbookToModify.available = modifiedTextbookData["available"]
+
+    db.session.commit()
+
 
 
 def textbook_array_to_json(textbooks):
