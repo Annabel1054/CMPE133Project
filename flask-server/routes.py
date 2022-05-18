@@ -57,7 +57,7 @@ def new_textbook():
     user = User.query.filter_by(email=email).first()
 
     textbook = Textbook(newTextbookData["email"], newTextbookData["title"], newTextbookData["author"], newTextbookData["isbn"], newTextbookData["price"], newTextbookData["originalPrice"],
-                        newTextbookData["course"], 'temp image', newTextbookData["description"], newTextbookData["quality"], user.name, user.phoneNum)
+                        newTextbookData["course"], 'temp image', newTextbookData["description"], newTextbookData["quality"], user.firstName, user.lastName, user.phoneNum)
 
     db.session.add(textbook)
     db.session.commit()
