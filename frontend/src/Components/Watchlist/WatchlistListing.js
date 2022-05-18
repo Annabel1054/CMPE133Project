@@ -1,20 +1,51 @@
 import { Container, Button, Card, Text, Modal } from "react-bootstrap";
 import calculusImage from "./Calculus Textbook.jpg"
 import './WatchlistStyles.css';
-import { AiOutlineClose } from 'react-icons/ai';
+import { AiOutlineBorderRight, AiOutlineClose } from 'react-icons/ai';
 import Popup from "./Popup";
 import { useState } from "react";
 
 
 
 export default function WatchlistListing(props) {
-    const { title, isbn, author, price, oldPrice, quality, description, course, name, phoneNum, email } = props;
+    const { title, isbn, author, price, oldPrice, quality, description, course, name, phoneNum, sellerEmail, id } = props;
 
     const [buttonpopup, setbuttonpopup] = useState(false);
     const [show, setShow] = useState(false);
 
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
+
+    const email = localStorage.getItem('email');
+
+    const removeListing = () => {
+
+        let removeData = {
+            email: email,
+            textbookId: id,
+        }
+
+        fetch("http://127.0.0.1:5000/remove_from_watchlist", {
+            method: 'POST',
+            body: JSON.stringify(removeData),
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+            .then(data => {
+                if (data.status !== 200)
+                    alert("Having error")
+                else {
+                    return data.json();
+                }
+            }).then(data => {
+                alert('Successfully Removed Listing From Your Watchlist!');
+                window.location.replace("/watchlist");
+            })
+            .catch(function (error) {
+                console.log("Fetch error: " + error);
+            });
+    }
 
     return (
         <div className="listingContainer">
@@ -31,7 +62,7 @@ export default function WatchlistListing(props) {
                     </Card.Text>
                 </Card.Body>
                 <Card.Body className="rightSection">
-                    <Button className="closeButton"><AiOutlineClose /></Button>
+                    <Button className="closeButton" onClick={removeListing}><AiOutlineClose /></Button>
                     <div>
                         <Card.Text className="oldPrice">Original ${oldPrice}</Card.Text>
                         <Card.Text className="sellingPrice">${price}</Card.Text>
@@ -45,7 +76,7 @@ export default function WatchlistListing(props) {
                 </Modal.Header>
                 <Modal.Body>Seller Name: {name}</Modal.Body>
                 <Modal.Body>Contact Number: {phoneNum}</Modal.Body>
-                <Modal.Body>Contact Email: {email}</Modal.Body>
+                <Modal.Body>Contact Email: {sellerEmail}</Modal.Body>
             </Modal>
         </div>
     );

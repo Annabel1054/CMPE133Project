@@ -60,7 +60,7 @@ export default function WatchList() {
                             price={listing.price}
                             oldPrice={listing.originalPrice}
                             id={listing.id}
-                            email={listing.email}
+                            sellerEmail={listing.email}
                             name={listing.firstName + " " + listing.lastName}
                             phoneNum={listing.phoneNum}
                         />
