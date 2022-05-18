@@ -111,7 +111,7 @@ def get_user_watchlist():
             f"%{userInfo['email']}%")).first()
 
         availableTextbooks = Textbook.query.filter(
-            user_id=user.id).filter(available=1).all()
+            Textbook.users.any(User.id == user.id)).filter(Textbook.available.like("1")).all()
 
         return textbook_array_to_json(availableTextbooks)
 

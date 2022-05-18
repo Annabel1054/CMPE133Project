@@ -4,9 +4,9 @@ from werkzeug.security import check_password_hash, generate_password_hash
 
 watchlists_association_table = db.Table('watchlists_association', db.Model.metadata,
                                         db.Column('user_id', db.Integer,
-                                                  db.ForeignKey('user.id')),
+                                                  db.ForeignKey('User.id')),
                                         db.Column(
-                                            'textbook_id', db.Integer, db.ForeignKey("textbook.id"))
+                                            'textbook_id', db.Integer, db.ForeignKey("Textbook.id"))
 
                                         )
 
@@ -19,7 +19,7 @@ class User(db.Model):
         self.lastName = lastName
         self.phoneNum = phoneNum
 
-    __tablename__ = 'user'
+    __tablename__ = 'User'
     id = db.Column(db.Integer, primary_key=True)
 
     email = db.Column(db.String(64), index=True, unique=True)
@@ -31,7 +31,7 @@ class User(db.Model):
     phoneNum = db.Column(db.String(64), index=True)
 
     textbooks = db.relationship(
-        "Textbook", secondary=watchlists_association_table)
+        "Textbook", secondary=watchlists_association_table, backref="User")
 
     def set_password(self, password):
         self.password = password
@@ -59,7 +59,7 @@ class User(db.Model):
 
 
 class Textbook(db.Model):
-    def __init__(self, email, title, author, isbn, price, originalPrice, courseName, image, description, quality, sellerFirstName, sellerLastName, sellerPhoneNo, user_id):
+    def __init__(self, email, title, author, isbn, price, originalPrice, courseName, image, description, quality, sellerFirstName, sellerLastName, sellerPhoneNo):
 
         self.email = email
         self.title = title
@@ -76,9 +76,11 @@ class Textbook(db.Model):
         self.sellerFirstName = sellerFirstName
         self.sellerLastName = sellerLastName
         self.sellerPhoneNo = sellerPhoneNo
-        self.user_id = user_id
 
-    __tablename__ = 'textbook'
+    __tablename__ = 'Textbook'
+
+    users = db.relationship(
+        "User", secondary=watchlists_association_table, backref="Textbook")
 
     id = db.Column(db.Integer, primary_key=True)
 
@@ -99,7 +101,6 @@ class Textbook(db.Model):
     sellerFirstName = db.Column(db.String(64), index=True)
     sellerLastName = db.Column(db.String(64), index=True)
     sellerPhoneNo = db.Column(db.String(64), index=True)
-
 
 
 @login_manager.user_loader
