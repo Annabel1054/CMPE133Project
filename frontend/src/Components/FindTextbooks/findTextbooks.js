@@ -110,7 +110,9 @@ export default function FindTextbooks() {
                         price={listing.price}
                         originalPrice={listing.originalPrice}
                         id={listing.id}
-                        name={email}
+                        name={listing.firstName + " " + listing.lastName}
+                        email={listing.email}
+                        phoneNum={listing.phoneNum}
                     />
                 ))
             )}

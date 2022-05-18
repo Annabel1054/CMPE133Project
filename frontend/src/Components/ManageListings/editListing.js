@@ -50,7 +50,7 @@ export default function EditListing() {
             available: 1,
         }
 
-        fetch("http://127.0.0.1:5000/manage_listings", {
+        fetch("http://127.0.0.1:5000/modify_listing", {
             method: 'POST',
             body: JSON.stringify(listing),
             headers: {

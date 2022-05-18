@@ -30,7 +30,7 @@ export default function Listing(props) {
             available: 0, // mark available as false
         }
 
-        fetch("http://127.0.0.1:5000/manage_listings", {
+        fetch("http://127.0.0.1:5000/modify_listing", {
             method: 'POST',
             body: JSON.stringify(listing),
             headers: {
@@ -42,6 +42,7 @@ export default function Listing(props) {
                     alert("Having error")
                 else {
                     alert("Your textbook has successfully been marked as sold!")
+                    window.location.replace("/manageListings");
                 }
             })
             .catch(function (error) {
@@ -63,7 +64,7 @@ export default function Listing(props) {
                     </Card.Text>
                 </Card.Body>
                 <Card.Body className="rightSection">
-                    <Card.Text className="sellerName">Origial: ${originalPrice}</Card.Text>
+                    <Card.Text className="sellerName">Original: ${originalPrice}</Card.Text>
                     <div>
                         <Card.Text className="price">${price}</Card.Text>
 
