@@ -35,11 +35,18 @@ def login():
         password = userLoginData["password"]
 
         user = User.query.filter_by(email=email).first()
-
-        if user is not None or not User.check_password(password):
+        print(user)
+        
+        if user is None or not user.check_password(password):
+            print("User not found!")
             return jsonify("No user found")
+        else:
+            print("User found! logging in...")
+
 
         login_user(user)
+
+        return jsonify("Sended")
 
 
 @app.route("/create_new_listing", methods=["POST"])
@@ -58,15 +65,21 @@ def new_textbook():
     #     filedir = os.path.join(app.config['UPLOAD_FOLDER'], filename)
     #     file.save(filedir)
 
-    textbook = Textbook(newTextbookData["title"], newTextbookData["author"], newTextbookData["isbn"], newTextbookData["price"], newTextbookData["originalPrice"],
+    textbook = Textbook(newTextbooksData["email"], newTextbookData["title"], newTextbookData["author"], newTextbookData["isbn"], newTextbookData["price"], newTextbookData["originalPrice"],
                         newTextbookData["course"], 'temp image', newTextbookData["description"], newTextbookData["quality"])
 
     current_user.textbooks.append(textbook)
+    db.session.commit()
+
+
+
+    return jsonify("Sended")
+
 
 
 @app.route("/find_listings", methods=["POST"])
 def find_listings():
-    if request.method == "POST":
+    if request.method == "GET":
         textbookSearchCriteria = request.get_json()
 
         textbooks = None
