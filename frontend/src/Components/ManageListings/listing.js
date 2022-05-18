@@ -16,6 +16,7 @@ export default function Listing(props) {
 
     const markAsSold = () => {
         let listing = {
+            id: id,
             title: title,
             author: author,
             isbn: isbn,

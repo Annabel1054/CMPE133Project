@@ -7,17 +7,21 @@ import './styles.css';
 export default function FindTextbooks() {
     const [searchBy, setSearchBy] = React.useState('Textbook Title');
     const [result, setResult] = React.useState('');
-    const [searchedListings, setSearchedListings] = React.useState('');
-    const [originalListings, setOriginalListings] = React.useState('');
+    const [searchedListings, setSearchedListings] = React.useState({
+        textbooks: {}
+    });
+    const [originalListings, setOriginalListings] = React.useState();
+    const email = localStorage.getItem('email');
 
     useEffect(() => {
         let searchCriteria = {
-            filterType: null,
-            entry: null,
+            filterType: searchBy,
+            entry: '',
         }
 
-        fetch("http://127.0.0.1:5000/find_listings?filterType=undefined&entry=undefined", {
-            method: 'GET',
+        fetch("http://127.0.0.1:5000/find_listings", {
+            method: 'POST',
+            body: JSON.stringify(searchCriteria),
             headers: {
                 'Content-Type': 'application/json'
             }
@@ -49,7 +53,7 @@ export default function FindTextbooks() {
         }
 
         fetch("http://127.0.0.1:5000/find_listings", {
-            method: 'GET',
+            method: 'POST',
             body: JSON.stringify(searchCriteria),
             headers: {
                 'Content-Type': 'application/json'
@@ -62,6 +66,7 @@ export default function FindTextbooks() {
                     return data.json();
                 }
             }).then(data => {
+                console.log(data);
                 setSearchedListings(data);
             })
             .catch(function (error) {
@@ -84,23 +89,31 @@ export default function FindTextbooks() {
                     <Dropdown.Divider />
                     <Dropdown.Item onClick={(event) => { setSearchBy("Course") }}>Course</Dropdown.Item>
                 </DropdownButton>
-                <FormControl className="inputBox" onChange={(event) => { setResult(event.target.value) }} value={result} />
+                <FormControl className="inputBox" required onChange={(event) => { setResult(event.target.value) }} value={result} />
                 <Button className="goButton" onClick={searchListings}>
                     Go
                 </Button>
             </InputGroup>
 
 
-            <TextbookListing
-                title="Calculus"
-                author="Larson Hostetler Edwards"
-                isbn="9809238423"
-                quality="9"
-                course="MATH31"
-                description="This textbook is new."
-                price="87"
-                name="John Doe"
-            />
+            {(Object.keys(searchedListings.textbooks).length === 0) ? (
+                <p className="noTextbookMessage"> No Textbooks Found </p>
+            ) : (
+                searchedListings.textbooks.map((listing) => (
+                    <TextbookListing
+                        title={listing.title}
+                        author={listing.author}
+                        isbn={listing.isbn}
+                        quality={listing.quality}
+                        course={listing.courseName}
+                        description={listing.description}
+                        price={listing.price}
+                        originalPrice={listing.originalPrice}
+                        id={listing.id}
+                        name={email}
+                    />
+                ))
+            )}
         </div >
     );
 };

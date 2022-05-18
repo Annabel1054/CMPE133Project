@@ -36,6 +36,7 @@ export default function EditListing() {
         // Add a POST method to backend to edit textbook listing.
 
         let listing = {
+            id: location.state.id,
             title: title,
             author: author,
             isbn: isbn,

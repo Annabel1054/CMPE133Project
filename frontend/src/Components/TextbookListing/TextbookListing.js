@@ -3,7 +3,7 @@ import calculusImage from "./Calculus Textbook.jpg"
 import './styles.css';
 
 export default function TextbookListing(props) {
-    const { title, isbn, author, price, quality, description, course, name } = props;
+    const { title, isbn, author, price, quality, description, course, name, originalPrice } = props;
 
     return (
         <div className="listingContainer">
@@ -15,15 +15,16 @@ export default function TextbookListing(props) {
                     <Card.Text>Quality: {quality}</Card.Text>
                     <Card.Text>Course: {course}</Card.Text>
                     <Card.Text>
-                        {description} Some quick example text to build on the card title and make up the bulk of
-                        the card's content.
+                        {description}
                     </Card.Text>
                 </Card.Body>
                 <Card.Body className="rightSection">
                     <Card.Text className="sellerName">{name}</Card.Text>
+
                     <div>
+                        <Card.Text className="oldPrice">Original ${originalPrice}</Card.Text>
                         <Card.Text className="price">${price}</Card.Text>
-                        <Button style={{ width: '150px', backgroundColor: '#829A7E' }} variant="primary">Add to Watchlist</Button>
+                        <Button className="addToWatchlist" style={{ width: '150px', backgroundColor: '#829A7E' }} variant="primary">Add to Watchlist</Button>
                     </div>
 
                 </Card.Body>

@@ -13,3 +13,8 @@
 .dropdownButton {
     width: 1000px;
 }
+
+.noTextbookMessage {
+    font-size: 25px;
+    margin-left: 15%;
+}
