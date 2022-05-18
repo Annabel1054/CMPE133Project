@@ -196,7 +196,7 @@ def textbook_array_to_json(textbooks):
                     "\"buyerEmail\": \"" + b.email + "\"," + \
                     "\"buyerPhoneNum\": \"" + b.phoneNum + "\"}"
 
-                if b == textbooks[-1]:
+                if b != t.users[-1]:
                     jsonTextbooks = jsonTextbooks + ","
 
             jsonTextbooks = jsonTextbooks + "]"
@@ -226,7 +226,7 @@ def textbook_array_to_json(textbooks):
                     "\"buyerEmail\": \"" + b.email + "\"," + \
                     "\"buyerPhoneNum\": \"" + b.phoneNum + "\"}"
 
-                if b == textbooks[-1]:
+                if b != t.users[-1]:
                     jsonTextbooks = jsonTextbooks + ","
 
             jsonTextbooks = jsonTextbooks + "]"
