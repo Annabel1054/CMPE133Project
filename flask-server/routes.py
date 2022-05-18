@@ -46,7 +46,7 @@ def login():
 
         login_user(user)
 
-        return jsonify("Sended")
+        return jsonify("Logging in")
 
 
 @app.route("/create_new_listing", methods=["POST"])
@@ -100,6 +100,33 @@ def find_listings():
 
         textbooks = textbooks.filter_by(available=1).all()
         return textbook_array_to_json(textbooks)
+
+
+@app.route("/get_user_watchlist", methods=["POST"])
+def get_user_watchlist():
+    if request.method == "POST":
+        userInfo = request.get_json()
+
+        user = User.query.filter(User.email.like(f"%{userInfo["email"]}%")).first()
+
+        availableTextbooks = Textbook.query.filter(user_id=user.id).filter(available=1).all()
+
+        return textbook_array_to_json(availableTextbooks)
+
+@app.route("/add_to_watchlist", methods=["POST"])
+def add_to_watchlist():
+    if request.method == "POST":
+        userRequestInfo = request.get_json()
+
+        user = User.query.filter_by(email=userRequestInfo["email"]).first()
+        textbook = Textbook.query.filter_by(id=userRequestInfo["textbookId"]).first()
+
+        user.textbooks.append(textbook)
+
+        db.session.commit()
+
+        return jsonify("Sended")
+
 
 
 @app.route("/modify_listing", methods=["POST"])
