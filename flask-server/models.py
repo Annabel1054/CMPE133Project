@@ -22,7 +22,7 @@ class User(db.Model):
 
     phoneNum = db.Column(db.String(64), index=True)
 
-    textbooks = db.relationship("Textbook", backref="user")
+    #textbooks = db.relationship("Textbook", backref="user")
 
     def set_password(self, password):
         self.password = password
@@ -50,8 +50,9 @@ class User(db.Model):
 
 
 class Textbook(db.Model):
-    def __init__(self, title, author, isbn, price, originalPrice, courseName, image, description, quality):
+    def __init__(self, email, title, author, isbn, price, originalPrice, courseName, image, description, quality):
 
+        self.email = email
         self.title = title
         self.author = author
         self.isbn = isbn
@@ -61,9 +62,11 @@ class Textbook(db.Model):
         self.image = image
         self.description = description
         self.quality = quality
+        self.available = 1
 
     id = db.Column(db.Integer, primary_key=True)
 
+    email = db.Column(db.String(64), index=True)
     title = db.Column(db.String(64), index=True)
     author = db.Column(db.String(64), index=True)
     isbn = db.Column(db.String(64), index=True)
@@ -75,7 +78,9 @@ class Textbook(db.Model):
     description = db.Column(db.String(5092), index=True)
     quality = db.Column(db.String(64), index=True)
 
-    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    available = db.Column(db.Integer, index=True)
+
+    #user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
 
 
 @login_manager.user_loader

@@ -51,24 +51,13 @@ def login():
 
 @app.route("/create_new_listing", methods=["POST"])
 def new_textbook():
-    # if request.method == "POST":
-    # if 'file' not in request.files:
-    #     return jsonify("NO FILE")
 
     newTextbookData = request.get_json()
 
-    # print(newTextbookData['file'])
-    # file = request.files['file']
-
-    # if file:
-    #     filename = secure_filename(file.filename)
-    #     filedir = os.path.join(app.config['UPLOAD_FOLDER'], filename)
-    #     file.save(filedir)
-
-    textbook = Textbook(newTextbooksData["email"], newTextbookData["title"], newTextbookData["author"], newTextbookData["isbn"], newTextbookData["price"], newTextbookData["originalPrice"],
+    textbook = Textbook(newTextbookData["email"], newTextbookData["title"], newTextbookData["author"], newTextbookData["isbn"], newTextbookData["price"], newTextbookData["originalPrice"],
                         newTextbookData["course"], 'temp image', newTextbookData["description"], newTextbookData["quality"])
 
-    current_user.textbooks.append(textbook)
+    db.session.add(textbook)
     db.session.commit()
 
 
@@ -76,8 +65,17 @@ def new_textbook():
     return jsonify("Sended")
 
 
+@app.route("/manage_listings", methods=["POST"])
+def manage_listings():
 
-@app.route("/find_listings", methods=["POST"])
+    listingsData = request.get_json()
+
+    textbooks = Textbook.query.filter(Textbook.name.like(listingsData["email"])).filter(Textbook.available.like("1"))
+
+    return jsonify(textbooks)
+    
+
+@app.route("/find_listings", methods=["GET"])
 def find_listings():
     if request.method == "GET":
         textbookSearchCriteria = request.get_json()
