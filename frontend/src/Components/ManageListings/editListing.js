@@ -34,6 +34,39 @@ export default function EditListing() {
         console.log("Author Name: " + author);
         console.log("Course Name: " + course);
         // Add a POST method to backend to edit textbook listing.
+
+        let listing = {
+            id: location.state.id,
+            title: title,
+            author: author,
+            isbn: isbn,
+            price: price,
+            originalPrice: originalPrice,
+            course: course,
+            // file: image,
+            email: location.state.email,
+            description: description,
+            quality: quality,
+            available: 1,
+        }
+
+        fetch("http://127.0.0.1:5000/modify_listing", {
+            method: 'POST',
+            body: JSON.stringify(listing),
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+            .then(data => {
+                if (data.status !== 200)
+                    alert("Having error")
+                else {
+                    alert("Successfully updated your textbook listing.")
+                }
+            })
+            .catch(function (error) {
+                console.log("Fetch error: " + error);
+            });
     }
 
     return (
@@ -51,6 +84,7 @@ export default function EditListing() {
                             <Form.Label>Textbook Title</Form.Label>
                             <Form.Control
                                 id="textbookTitle"
+                                required
                                 value={title}
                                 onChange={e => setTitle(e.target.value)}
                                 placeholder="Enter Textbook Title"
@@ -60,6 +94,7 @@ export default function EditListing() {
                             <Form.Label>Author Name</Form.Label>
                             <Form.Control
                                 id="author"
+                                required
                                 placeholder="Enter Author Name"
                                 value={author}
                                 onChange={e => setAuthor(e.target.value)}
@@ -69,6 +104,7 @@ export default function EditListing() {
                             <Form.Label>ISBN</Form.Label>
                             <Form.Control
                                 id="isbn"
+                                required
                                 placeholder="Enter ISBN"
                                 value={isbn}
                                 onChange={e => setIsbn(e.target.value)}
@@ -83,6 +119,7 @@ export default function EditListing() {
                                 <FormControl
                                     type="number"
                                     id="price"
+                                    required
                                     placeholder="15.00"
                                     value={price}
                                     onChange={e => setPrice(e.target.value)}
@@ -96,6 +133,7 @@ export default function EditListing() {
                                 <FormControl
                                     type="number"
                                     id="originalPrice"
+                                    required
                                     placeholder="35.00"
                                     value={originalPrice}
                                     onChange={e => setOriginalPrice(e.target.value)}
@@ -107,6 +145,7 @@ export default function EditListing() {
                             <Form.Control
                                 id="course"
                                 placeholder="Ex: CS46A"
+                                required
                                 value={course}
                                 onChange={e => setCourse(e.target.value)}
                             />
@@ -128,6 +167,7 @@ export default function EditListing() {
                             <Form.Control
                                 as="textarea"
                                 rows={3}
+                                required
                                 id="description"
                                 placeholder="Tell us about your book."
                                 value={description}

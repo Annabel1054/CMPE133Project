@@ -11,6 +11,32 @@ export default function LoginPage() {
         e.preventDefault();
         console.log("Email: " + email);
         console.log("Password: " + password);
+
+        let userData = {
+            email: email,
+            password: password,
+        }
+
+        fetch("http://127.0.0.1:5000/login_user", {
+            method: 'POST',
+            body: JSON.stringify(userData),
+            headers: {
+                'Content-Type': 'application/json',
+                'Access-Control-Allow-Origin': '*'
+            }
+        })
+            .then(data => {
+                if (data.status !== 200)
+                    alert("Having error")
+                else {
+                    console.log("Successfully logged in!");
+                    localStorage.setItem("email", email);
+                    window.location.replace("/findTextbooks");
+                }
+            })
+            .catch(function (error) {
+                console.log("Fetch error: " + error);
+            });
     }
     return (
         <div className="background">
