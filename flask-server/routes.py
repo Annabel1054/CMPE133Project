@@ -131,6 +131,21 @@ def add_to_watchlist():
 
         return jsonify("Sended")
 
+@app.route("remove_from_watchlist", methods=["POST"])
+def remove_from_watchlist():
+    if request.method == "POST":
+        userRequestInfo = request.get_json()
+
+        user = User.query.filter_by(email=userRequestInfo["email"]).first()
+        textbook = Textbook.query.filter_by(
+            id=userRequestInfo["textbookId"]).first()
+
+        user.textbooks.remove(textbook)
+
+        db.session.commit()
+
+        return jsonify("Sended")
+
 
 @app.route("/modify_listing", methods=["POST"])
 def modify_listing():
