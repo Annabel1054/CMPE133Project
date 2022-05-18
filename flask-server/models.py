@@ -1,6 +1,7 @@
-from server import db, app
+from server import db
+from server import login_manager
 from werkzeug.security import check_password_hash, generate_password_hash
-from flask_login import LoginManager
+
 
 
 class User(db.Model):
@@ -14,7 +15,7 @@ class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
 
     email = db.Column(db.String(64), index=True, unique=True)
-    password_hash = db.Column(db.String(128))
+    password = db.Column(db.String(128))
 
     firstName = db.Column(db.String(64), index=True)
     lastName = db.Column(db.String(64), index=True)
@@ -24,17 +25,17 @@ class User(db.Model):
     textbooks = db.relationship("Textbook", backref="user")
 
     def set_password(self, password):
-        self.password_hash = generate_password_hash(password)
+        self.password = password
 
     def check_password(self, password):
-        return check_password_hash(self.password_hash, password)
+        return password == password
 
     is_active = True
     is_anonymous = False
     is_authenticated = True
 
     def get_id(self):
-        return self.id
+        return str(self.id)
 
 
 '''
@@ -77,9 +78,7 @@ class Textbook(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
 
 
-login_manager = LoginManager()
-login_manager.init_app(app)
-
 @login_manager.user_loader
 def load_user(user_id):
-    return User.get(user_id)
+    return User.query.get(int(user_id))
+

@@ -15,6 +15,8 @@ export default function ListingForm() {
     const [originalPrice, setOriginalPrice] = useState(0);
     const [description, setDescription] = useState('');
 
+    const email = localStorage.getItem('email');
+
     const printImage = (e) => {
         // console.log(e.target.files[0]);
         // const data = new FormData();
@@ -22,6 +24,7 @@ export default function ListingForm() {
         // data.append('filename', this.fileName.value);
         setImage(e.target.files[0]);
         setImageName(e.target.value);
+        console.log(email);
     }
 
     const onSubmit = (e) => {
@@ -51,6 +54,7 @@ export default function ListingForm() {
             originalPrice: originalPrice,
             course: course,
             // file: image,
+            email: email,
             description: description,
             quality: quality,
         }

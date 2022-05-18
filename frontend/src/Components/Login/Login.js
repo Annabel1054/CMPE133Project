@@ -29,8 +29,9 @@ export default function LoginPage() {
                 if (data.status !== 200)
                     alert("Having error")
                 else {
-                    window.location.replace("/findTextbooks");
                     console.log("Successfully logged in!");
+                    localStorage.setItem("email", email);
+                    window.location.replace("/findTextbooks");
                 }
             })
             .catch(function (error) {
