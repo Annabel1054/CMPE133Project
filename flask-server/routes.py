@@ -71,6 +71,32 @@ def manage_listings():
     textbooks = Textbook.query.filter(Textbook.email.like(
         listingsData["email"])).filter(Textbook.available.like("1")).all()
 
+    return textbook_array_to_json(textbooks)
+
+
+@app.route("/find_listings", methods=["GET"])
+def find_listings():
+    if request.method == "GET":
+        textbookSearchCriteria = request.get_json()
+
+        textbooks = None
+
+        if searchCriteria["filterType"] == "title" or searchCriteria["filterType"] == None:
+            textbooks = Textbook.query.filter(
+                Textbook.title.like(f"%{searchCriteria['entry']}%"))
+
+        elif searchCriteria["filterType"] == "isbn":
+            textbooks = Textbook.query.filter(
+                Textbook.isbn.like(f"%{searchCriteria['entry']}%"))
+
+        elif searchCriteria["filterType"] == "courseName":
+            textbooks = Textbook.query.filter(
+                Textbook.courseName.like(f"%{searchCriteria['entry']}%"))
+
+        return textbook_array_to_json(textbooks)
+
+
+def textbook_array_to_json(textbooks):
     jsonTextbooks = "{ \"textbooks\" :[ "
     for t in textbooks:
         if t != textbooks[-1]:
@@ -101,27 +127,6 @@ def manage_listings():
                 "\"}"
 
     jsonTextbooks = jsonTextbooks + "]}"
-    print(jsonTextbooks)
+
     return jsonTextbooks
 
-
-@app.route("/find_listings", methods=["GET"])
-def find_listings():
-    if request.method == "GET":
-        textbookSearchCriteria = request.get_json()
-
-        textbooks = None
-
-        if searchCriteria["filterType"] == "title" or searchCriteria["filterType"] == None:
-            textbooks = Textbook.query.filter(
-                Textbook.title.like(f"%{searchCriteria['entry']}%"))
-
-        elif searchCriteria["filterType"] == "isbn":
-            textbooks = Textbook.query.filter(
-                Textbook.isbn.like(f"%{searchCriteria['entry']}%"))
-
-        elif searchCriteria["filterType"] == "courseName":
-            textbooks = Textbook.query.filter(
-                Textbook.courseName.like(f"%{searchCriteria['entry']}%"))
-
-        return jsonify(textbooks)
