@@ -187,7 +187,22 @@ def textbook_array_to_json(textbooks):
                 "\"courseName\": \"" + t.courseName + "\"," + \
                 "\"description\": \"" + t.description + "\"," + \
                 "\"quality\": \"" + t.quality + \
-                "\"},"
+                "\"buyers\": ["
+                
+            for b in t.users:
+                jsonTextbooks = jsonTextbooks + "{" + \
+                "\"buyerFirstName\": \"" + b.firstName + "\"," + \ 
+                "\"buyerLastName\": \"" + b.lastName + "\"," + \ 
+                "\"buyerEmail\": \"" + b.email + "\"," + \ 
+                "\"buyerPhoneNum\": \"" + b.phoneNum + "\"}"
+
+                if b == textbooks[-1]:
+                    jsonTextbooks = jsonTextbooks + ","
+                else
+                    jsonTextbooks = jsonTextbooks + "]"
+                
+
+            jsonTextbooks = jsonTextbooks + "\"},"
         else:
             jsonTextbooks = jsonTextbooks + "{" + \
                 "\"id\": \"" + str(t.id) + "\"," + \
@@ -203,7 +218,21 @@ def textbook_array_to_json(textbooks):
                 "\"courseName\": \"" + t.courseName + "\"," + \
                 "\"description\": \"" + t.description + "\"," + \
                 "\"quality\": \"" + t.quality + \
-                "\"}"
+                "\"buyers\": ["
+                
+            for b in t.users:
+                jsonTextbooks = jsonTextbooks + "{" + \
+                "\"buyerFirstName\": \"" + b.firstName + "\"," + \ 
+                "\"buyerLastName\": \"" + b.lastName + "\"," + \ 
+                "\"buyerEmail\": \"" + b.email + "\"," + \ 
+                "\"buyerPhoneNum\": \"" + b.phoneNum + "\"}"
+
+                if b == textbooks[-1]:
+                    jsonTextbooks = jsonTextbooks + ","
+                else
+                    jsonTextbooks = jsonTextbooks + "]"
+
+            jsonTextbooks = jsonTextbooks + "\"}"
 
     jsonTextbooks = jsonTextbooks + "]}"
 
