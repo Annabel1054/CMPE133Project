@@ -22,7 +22,7 @@ class User(db.Model):
 
     phoneNum = db.Column(db.String(64), index=True)
 
-    #textbooks = db.relationship("Textbook", backref="user")
+    textbooks = db.relationship("Textbook", backref="user")
 
     def set_password(self, password):
         self.password = password
@@ -88,7 +88,7 @@ class Textbook(db.Model):
     sellerLastName = db.Column(db.String(64), index=True)
     sellerPhoneNo = db.Column(db.String(64), index=True)
 
-    #user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
 
 
 @login_manager.user_loader
