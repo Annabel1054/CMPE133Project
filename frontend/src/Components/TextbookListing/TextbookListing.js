@@ -10,10 +10,12 @@ export default function TextbookListing(props) {
 
         let watchlistData = {
             email: email,
-            id: id,
+            textbookId: id,
         }
 
-        fetch("http://127.0.0.1:5000/modify_listing", {
+        console.log(id);
+
+        fetch("http://127.0.0.1:5000/add_to_watchlist", {
             method: 'POST',
             body: JSON.stringify(watchlistData),
             headers: {
@@ -24,7 +26,7 @@ export default function TextbookListing(props) {
                 if (data.status !== 200)
                     alert("Having error")
                 else {
-                    alert("Successfully updated your textbook listing.")
+                    alert("Successfully added this book into your watchlist!")
                 }
             })
             .catch(function (error) {

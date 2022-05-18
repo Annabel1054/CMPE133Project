@@ -62,6 +62,9 @@ export default function Listing(props) {
                     <Card.Text>
                         {description}
                     </Card.Text>
+                    <Card.Text>
+                        INTERESTED BUYERS:
+                    </Card.Text>
                 </Card.Body>
                 <Card.Body className="rightSection">
                     <Card.Text className="sellerName">Original: ${originalPrice}</Card.Text>
