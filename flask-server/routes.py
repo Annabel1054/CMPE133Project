@@ -131,7 +131,8 @@ def add_to_watchlist():
 
         return jsonify("Sended")
 
-@app.route("remove_from_watchlist", methods=["POST"])
+
+@app.route("/remove_from_watchlist", methods=["POST"])
 def remove_from_watchlist():
     if request.method == "POST":
         userRequestInfo = request.get_json()
