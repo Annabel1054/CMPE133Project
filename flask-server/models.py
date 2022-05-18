@@ -50,7 +50,7 @@ class User(db.Model):
 
 
 class Textbook(db.Model):
-    def __init__(self, email, title, author, isbn, price, originalPrice, courseName, image, description, quality):
+    def __init__(self, email, title, author, isbn, price, originalPrice, courseName, image, description, quality, sellerName, sellerPhoneNo):
 
         self.email = email
         self.title = title
@@ -63,6 +63,9 @@ class Textbook(db.Model):
         self.description = description
         self.quality = quality
         self.available = 1
+
+        self.sellerName = sellerName
+        self.sellerPhoneNo = sellerPhoneNo
 
     id = db.Column(db.Integer, primary_key=True)
 
@@ -79,6 +82,9 @@ class Textbook(db.Model):
     quality = db.Column(db.String(64), index=True)
 
     available = db.Column(db.Integer, index=True)
+
+    sellerName = db.Column(db.String(64), index=True)
+    sellerPhoneNo = db.Column(db.String(64), index=True)
 
     #user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
 
