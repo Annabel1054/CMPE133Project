@@ -19,12 +19,40 @@ export default function ListingForm() {
 
     const printImage = (e) => {
         // console.log(e.target.files[0]);
-        // const data = new FormData();
-        // data.append('file', this.uploadInput.files[0]);
-        // data.append('filename', this.fileName.value);
+        const data = new FormData();
+        data.append('file', e.target.files[0]);
+        // data.append('filename', e.target.value);
+
+        // data.append('image', e.target.files[0], e.target.value);
+        // console.log(data);
+
         setImage(e.target.files[0]);
         setImageName(e.target.value);
         console.log(email);
+        console.log(e.target.files[0])
+        console.log(e.target)
+
+        const fileData = {
+            image: data
+        }
+
+        fetch("http://127.0.0.1:5000/receive_image", {
+            method: 'POST',
+            body: data,
+        })
+            .then(data => {
+                if (data.status !== 200)
+                    alert("Having error")
+                else {
+                    console.log("Successfully uploaded image!");
+                    return data.json()
+                }
+            }).then((data) => {
+                console.log(data)
+            })
+            .catch(function (error) {
+                console.log("Fetch error: " + error);
+            });
     }
 
     const onSubmit = (e) => {
