@@ -168,6 +168,10 @@ def modify_listing():
     db.session.commit()
     return jsonify("Sended")
 
+@app.route("/receive_image", methods=["POST"])
+def receive_image():
+    if request.files:
+        print(files)
 
 def textbook_array_to_json(textbooks):
     jsonTextbooks = "{ \"textbooks\" :[ "
