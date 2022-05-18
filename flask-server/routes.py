@@ -107,11 +107,14 @@ def get_user_watchlist():
     if request.method == "POST":
         userInfo = request.get_json()
 
-        user = User.query.filter(User.email.like(f"%{userInfo["email"]}%")).first()
+        user = User.query.filter(User.email.like(
+            f"%{userInfo['email']}%")).first()
 
-        availableTextbooks = Textbook.query.filter(user_id=user.id).filter(available=1).all()
+        availableTextbooks = Textbook.query.filter(
+            user_id=user.id).filter(available=1).all()
 
         return textbook_array_to_json(availableTextbooks)
+
 
 @app.route("/add_to_watchlist", methods=["POST"])
 def add_to_watchlist():
@@ -119,14 +122,14 @@ def add_to_watchlist():
         userRequestInfo = request.get_json()
 
         user = User.query.filter_by(email=userRequestInfo["email"]).first()
-        textbook = Textbook.query.filter_by(id=userRequestInfo["textbookId"]).first()
+        textbook = Textbook.query.filter_by(
+            id=userRequestInfo["textbookId"]).first()
 
         user.textbooks.append(textbook)
 
         db.session.commit()
 
         return jsonify("Sended")
-
 
 
 @app.route("/modify_listing", methods=["POST"])

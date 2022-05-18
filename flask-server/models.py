@@ -3,7 +3,6 @@ from server import login_manager
 from werkzeug.security import check_password_hash, generate_password_hash
 
 
-
 class User(db.Model):
     def __init__(self, email, password, firstName, lastName, phoneNum):
         self.email = email
@@ -50,7 +49,7 @@ class User(db.Model):
 
 
 class Textbook(db.Model):
-    def __init__(self, email, title, author, isbn, price, originalPrice, courseName, image, description, quality, sellerFirstName, sellerLastName, sellerPhoneNo):
+    def __init__(self, email, title, author, isbn, price, originalPrice, courseName, image, description, quality, sellerFirstName, sellerLastName, sellerPhoneNo, user_id):
 
         self.email = email
         self.title = title
@@ -67,6 +66,7 @@ class Textbook(db.Model):
         self.sellerFirstName = sellerFirstName
         self.sellerLastName = sellerLastName
         self.sellerPhoneNo = sellerPhoneNo
+        self.user_id = user_id
 
     id = db.Column(db.Integer, primary_key=True)
 
@@ -88,10 +88,9 @@ class Textbook(db.Model):
     sellerLastName = db.Column(db.String(64), index=True)
     sellerPhoneNo = db.Column(db.String(64), index=True)
 
-    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
 
 
 @login_manager.user_loader
 def load_user(user_id):
     return User.query.get(int(user_id))
-
