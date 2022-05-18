@@ -16,7 +16,7 @@ export default function WatchList() {
                 email: email
             }
 
-            fetch("http://127.0.0.1:5000/manage_listings", {
+            fetch("http://127.0.0.1:5000/get_user_watchlist", {
                 method: 'POST',
                 body: JSON.stringify(userEmail),
                 headers: {
@@ -46,7 +46,7 @@ export default function WatchList() {
             <div className="watchlistContainer">
                 <div className="watchlistHeader">Your Watchlist</div>
                 {(typeof watchlistListings.textbooks === 'undefined') ? (
-                    <p> No Textbooks In Watchlist! Start Searching :) </p>
+                    <p className="noTextbookMessage"> No Textbooks In Watchlist! Start Searching :) </p>
                 ) : (
                     watchlistListings.textbooks.map((listing) => (
                         <WatchlistListing

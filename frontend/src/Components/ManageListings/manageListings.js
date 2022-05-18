@@ -6,7 +6,9 @@ import Listing from "./listing";
 
 export default function ManageListings() {
 
-    const [listings, setListings] = useState([]);
+    const [listings, setListings] = useState({
+        textbooks: {}
+    });
 
     const email = localStorage.getItem('email');
 
@@ -42,8 +44,8 @@ export default function ManageListings() {
         <div>
             <LoggedInNavBar />
             <div className="editListingHeader">Manage Listings</div>
-            {(typeof listings.textbooks === 'undefined') ? (
-                <p> loading ... </p>
+            {(Object.keys(listings.textbooks).length === 0) ? (
+                <p className="noTextbookMessage">You do not have any listings to manage. </p>
             ) : (
                 listings.textbooks.map((listing) => (
                     <Listing
