@@ -54,7 +54,7 @@ def new_textbook():
 
     newTextbookData = request.get_json()
 
-    user = User.query.filter_by(email=email).first()
+    user = User.query.filter_by(email=newTextbookData['email']).first()
 
     textbook = Textbook(newTextbookData["email"], newTextbookData["title"], newTextbookData["author"], newTextbookData["isbn"], newTextbookData["price"], newTextbookData["originalPrice"],
                         newTextbookData["course"], 'temp image', newTextbookData["description"], newTextbookData["quality"], user.firstName, user.lastName, user.phoneNum)
@@ -85,27 +85,29 @@ def find_listings():
 
         if searchCriteria["filterType"] == "Textbook Title" or searchCriteria["filterType"] == None:
             textbooks = Textbook.query.filter(
-                Textbook.title.like(f"%{searchCriteria['entry']}%")).all()
+                Textbook.title.like(f"%{searchCriteria['entry']}%"))
 
         elif searchCriteria["filterType"] == "ISBN":
             textbooks = Textbook.query.filter(
-                Textbook.isbn.like(f"%{searchCriteria['entry']}%")).all()
+                Textbook.isbn.like(f"%{searchCriteria['entry']}%"))
 
         elif searchCriteria["filterType"] == "Course":
             textbooks = Textbook.query.filter(
-                Textbook.courseName.like(f"%{searchCriteria['entry']}%")).all()
+                Textbook.courseName.like(f"%{searchCriteria['entry']}%"))
 
         if textbooks == None and searchCriteria['entry'] == '':
-            textbooks = Textbook.query.all()
+            textbooks = Textbook.query
 
+        textbooks = textbooks.filter_by(available=1).all()
         return textbook_array_to_json(textbooks)
 
 
 @app.route("/modify_listing", methods=["POST"])
 def modify_listing():
     modifiedTextbookData = request.get_json()
-    textbookToModify = Textbook.query.filter_by(id=int(modifiedTextbookData["id"])).first()
-    
+    textbookToModify = Textbook.query.filter_by(
+        id=int(modifiedTextbookData["id"])).first()
+
     textbookToModify.email = modifiedTextbookData["email"]
     textbookToModify.title = modifiedTextbookData["title"]
     textbookToModify.author = modifiedTextbookData["author"]
@@ -118,7 +120,7 @@ def modify_listing():
     textbookToModify.available = modifiedTextbookData["available"]
 
     db.session.commit()
-
+    return jsonify("Sended")
 
 
 def textbook_array_to_json(textbooks):
@@ -127,6 +129,9 @@ def textbook_array_to_json(textbooks):
         if t != textbooks[-1]:
             jsonTextbooks = jsonTextbooks + "{" + \
                 "\"id\": \"" + str(t.id) + "\"," + \
+                "\"firstName\": \"" + t.sellerFirstName + "\"," + \
+                "\"lastName\": \"" + t.sellerLastName + "\"," + \
+                "\"phoneNum\": \"" + t.sellerPhoneNo + "\"," + \
                 "\"email\": \"" + t.email + "\"," + \
                 "\"title\": \"" + t.title + "\"," + \
                 "\"author\": \"" + t.author + "\"," + \
@@ -140,6 +145,9 @@ def textbook_array_to_json(textbooks):
         else:
             jsonTextbooks = jsonTextbooks + "{" + \
                 "\"id\": \"" + str(t.id) + "\"," + \
+                "\"firstName\": \"" + t.sellerFirstName + "\"," + \
+                "\"lastName\": \"" + t.sellerLastName + "\"," + \
+                "\"phoneNum\": \"" + t.sellerPhoneNo + "\"," + \
                 "\"email\": \"" + t.email + "\"," + \
                 "\"title\": \"" + t.title + "\"," + \
                 "\"author\": \"" + t.author + "\"," + \
