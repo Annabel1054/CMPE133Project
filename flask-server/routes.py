@@ -74,24 +74,27 @@ def manage_listings():
     return textbook_array_to_json(textbooks)
 
 
-@app.route("/find_listings", methods=["GET"])
+@app.route("/find_listings", methods=["POST"])
 def find_listings():
-    if request.method == "GET":
-        textbookSearchCriteria = request.get_json()
+    if request.method == "POST":
+        searchCriteria = request.get_json()
 
         textbooks = None
 
-        if searchCriteria["filterType"] == "title" or searchCriteria["filterType"] == None:
+        if searchCriteria["filterType"] == "Textbook Title" or searchCriteria["filterType"] == None:
             textbooks = Textbook.query.filter(
-                Textbook.title.like(f"%{searchCriteria['entry']}%"))
+                Textbook.title.like(f"%{searchCriteria['entry']}%")).all()
 
-        elif searchCriteria["filterType"] == "isbn":
+        elif searchCriteria["filterType"] == "ISBN":
             textbooks = Textbook.query.filter(
-                Textbook.isbn.like(f"%{searchCriteria['entry']}%"))
+                Textbook.isbn.like(f"%{searchCriteria['entry']}%")).all()
 
-        elif searchCriteria["filterType"] == "courseName":
+        elif searchCriteria["filterType"] == "Course":
             textbooks = Textbook.query.filter(
-                Textbook.courseName.like(f"%{searchCriteria['entry']}%"))
+                Textbook.courseName.like(f"%{searchCriteria['entry']}%")).all()
+
+        if textbooks == None and searchCriteria['entry'] == '':
+            textbooks = Textbook.query.all()
 
         return textbook_array_to_json(textbooks)
 
@@ -101,7 +104,7 @@ def textbook_array_to_json(textbooks):
     for t in textbooks:
         if t != textbooks[-1]:
             jsonTextbooks = jsonTextbooks + "{" + \
-                "\"id\": \"" + "{t.id}" + "\"," + \
+                "\"id\": \"" + str(t.id) + "\"," + \
                 "\"email\": \"" + t.email + "\"," + \
                 "\"title\": \"" + t.title + "\"," + \
                 "\"author\": \"" + t.author + "\"," + \
@@ -114,7 +117,7 @@ def textbook_array_to_json(textbooks):
                 "\"},"
         else:
             jsonTextbooks = jsonTextbooks + "{" + \
-                "\"id\": \"" + "{t.id}" + "\"," + \
+                "\"id\": \"" + str(t.id) + "\"," + \
                 "\"email\": \"" + t.email + "\"," + \
                 "\"title\": \"" + t.title + "\"," + \
                 "\"author\": \"" + t.author + "\"," + \
@@ -129,4 +132,3 @@ def textbook_array_to_json(textbooks):
     jsonTextbooks = jsonTextbooks + "]}"
 
     return jsonTextbooks
-
