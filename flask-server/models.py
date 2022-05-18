@@ -2,6 +2,14 @@ from server import db
 from server import login_manager
 from werkzeug.security import check_password_hash, generate_password_hash
 
+watchlists_association_table = db.Table('watchlists_association', db.Model.metadata,
+                                        db.Column('user_id', db.Integer,
+                                                  db.ForeignKey('user.id')),
+                                        db.Column(
+                                            'textbook_id', db.Integer, db.ForeignKey("textbook.id"))
+
+                                        )
+
 
 class User(db.Model):
     def __init__(self, email, password, firstName, lastName, phoneNum):
@@ -11,6 +19,7 @@ class User(db.Model):
         self.lastName = lastName
         self.phoneNum = phoneNum
 
+    __tablename__ = 'user'
     id = db.Column(db.Integer, primary_key=True)
 
     email = db.Column(db.String(64), index=True, unique=True)
@@ -21,7 +30,8 @@ class User(db.Model):
 
     phoneNum = db.Column(db.String(64), index=True)
 
-    textbooks = db.relationship("Textbook", backref="user")
+    textbooks = db.relationship(
+        "Textbook", secondary=watchlists_association_table)
 
     def set_password(self, password):
         self.password = password
@@ -68,6 +78,8 @@ class Textbook(db.Model):
         self.sellerPhoneNo = sellerPhoneNo
         self.user_id = user_id
 
+    __tablename__ = 'textbook'
+
     id = db.Column(db.Integer, primary_key=True)
 
     email = db.Column(db.String(64), index=True)
@@ -88,7 +100,6 @@ class Textbook(db.Model):
     sellerLastName = db.Column(db.String(64), index=True)
     sellerPhoneNo = db.Column(db.String(64), index=True)
 
-    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
 
 
 @login_manager.user_loader
