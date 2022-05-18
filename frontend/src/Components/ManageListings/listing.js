@@ -64,6 +64,7 @@ export default function Listing(props) {
                     </Card.Text>
                     <Card.Text>
                         INTERESTED BUYERS:
+                        name of buyer - email
                     </Card.Text>
                 </Card.Body>
                 <Card.Body className="rightSection">

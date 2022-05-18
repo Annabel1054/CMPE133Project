@@ -7,7 +7,9 @@ import React, { useEffect, useState } from 'react';
 
 
 export default function WatchList() {
-    const [watchlistListings, setWatclistListings] = useState([]);
+    const [watchlistListings, setWatclistListings] = useState({
+        textbooks: {}
+    });
     const email = localStorage.getItem('email');
 
     useEffect(() => {
@@ -46,7 +48,7 @@ export default function WatchList() {
 
             <div className="watchlistContainer">
                 <div className="watchlistHeader">Your Watchlist</div>
-                {(typeof watchlistListings.textbooks === 'undefined') ? (
+                {(Object.keys(watchlistListings.textbooks).length === 0) ? (
                     <p className="noTextbookMessage"> No Textbooks In Watchlist! Start Searching :) </p>
                 ) : (
                     watchlistListings.textbooks.map((listing) => (
