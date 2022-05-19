@@ -15,7 +15,7 @@ app.config.from_mapping(
     SQLALCHEMY_TRACK_MODIFICATIONS=False
 )
 
-UPLOAD_FOLDER = os.path.join(basedir, 'images')
+UPLOAD_FOLDER = os.path.join(basedir, 'static')
 
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
