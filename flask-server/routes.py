@@ -55,19 +55,24 @@ def login():
 
         return jsonify("Logging in")
 
+@app.route("/save_image", methods=["POST"])
+def save_image():
+    image = request.files['image']
+    image.save(url_for('static', filename=image.filename))
+    return jsonify("saved image")
+
 
 @app.route("/create_new_listing", methods=["POST"])
 def new_textbook():
 
     newTextbookData = request.get_json()
 
-    image = request.files['image']
-    image.save(url_for('static', filename=image.filename))
+    
 
     user = User.query.filter_by(email=newTextbookData['email']).first()
 
     textbook = Textbook(newTextbookData["email"], newTextbookData["title"], newTextbookData["author"], newTextbookData["isbn"], newTextbookData["price"], newTextbookData["originalPrice"],
-                        newTextbookData["course"], 'temp image', newTextbookData["description"], newTextbookData["quality"], user.firstName, user.lastName, user.phoneNum, url_for('static', filename=file.filename))
+                        newTextbookData["course"], newTextbookData["description"], newTextbookData["quality"], user.firstName, user.lastName, user.phoneNum, url_for('static', filename=newTextbookData["imageName"]))
 
     db.session.add(textbook)
     db.session.commit()
@@ -165,11 +170,6 @@ def modify_listing():
     textbookToModify = Textbook.query.filter_by(
         id=int(modifiedTextbookData["id"])).first()
 
-    if(request.files['image'])
-        image = request.files['image']
-        image.save(url_for('static', filename=image.filename))
-        textbookToModify.image_url = url_for('static', filename=image.filename)
-
     textbookToModify.email = modifiedTextbookData["email"]
     textbookToModify.title = modifiedTextbookData["title"]
     textbookToModify.author = modifiedTextbookData["author"]
@@ -180,6 +180,7 @@ def modify_listing():
     textbookToModify.description = modifiedTextbookData["description"]
     textbookToModify.quality = modifiedTextbookData["quality"]
     textbookToModify.available = modifiedTextbookData["available"]
+    textbookToModify.imageName = url_for('static', filename=newTextbookData["imageName"])
     
 
     db.session.commit()
