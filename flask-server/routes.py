@@ -28,12 +28,14 @@ def register():
 
         return jsonify("Sended")
 
+
 '''
 @app.route("/test", methods=["GET"])
 def test():
     print(url_for('static', filename="chatty.png"))
     return redirect(url_for('static', filename="chatty.png"))
 '''
+
 
 @app.route("/login_user", methods=["POST"])
 def login():
@@ -194,7 +196,6 @@ def receive_image():
     file.save(os.path.join(app.config['UPLOAD_FOLDER'], file.filename))
 
     return jsonify("Sended :)")
-
 
 
 def textbook_array_to_json(textbooks):

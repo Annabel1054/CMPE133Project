@@ -18,50 +18,43 @@ export default function ListingForm() {
     const email = localStorage.getItem('email');
 
     const printImage = (e) => {
-        // console.log(e.target.files[0]);
-        const data = new FormData();
-        data.append('file', e.target.files[0]);
-        // data.append('filename', e.target.value);
-
-        // data.append('image', e.target.files[0], e.target.value);
-        // console.log(data);
+        // const data = new FormData();
+        // data.append('image', e.target.files[0]);
 
         setImage(e.target.files[0]);
         setImageName(e.target.value);
-        console.log(email);
-        console.log(e.target.files[0])
-        console.log(e.target)
+        // console.log(email);
+        // console.log(e.target.files[0])
+        // console.log(e.target.files[0].name)
 
-        const fileData = {
-            image: data
-        }
+        // const fileData = {
+        //     image: data
+        // }
 
-        fetch("http://127.0.0.1:5000/receive_image", {
-            method: 'POST',
-            body: data,
-        })
-            .then(data => {
-                if (data.status !== 200)
-                    alert("Having error")
-                else {
-                    console.log("Successfully uploaded image!");
-                    return data.json()
-                }
-            }).then((data) => {
-                console.log(data)
-            })
-            .catch(function (error) {
-                console.log("Fetch error: " + error);
-            });
+        // fetch("http://127.0.0.1:5000/receive_image", {
+        //     method: 'POST',
+        //     body: data,
+        // })
+        //     .then(data => {
+        //         if (data.status !== 200)
+        //             alert("Having error")
+        //         else {
+        //             console.log("Successfully uploaded image!");
+        //             return data.json()
+        //         }
+        //     }).then((data) => {
+        //         console.log(data)
+        //     })
+        //     .catch(function (error) {
+        //         console.log("Fetch error: " + error);
+        //     });
     }
 
     const onSubmit = (e) => {
         e.preventDefault();
 
         const data = new FormData();
-        data.append('file', image);
-        console.log(image);
-        console.log(data);
+        data.append('image', image);
 
         console.log("Textbook title: " + title);
         console.log("ISBN: " + isbn);
@@ -81,11 +74,29 @@ export default function ListingForm() {
             price: price,
             originalPrice: originalPrice,
             course: course,
-            // file: image,
+            imageName: image.name,
             email: email,
             description: description,
             quality: quality,
         }
+
+        fetch("http://127.0.0.1:5000/save_image", {
+            method: 'POST',
+            body: data,
+        })
+            .then(data => {
+                if (data.status !== 200)
+                    alert("Having error")
+                else {
+                    console.log("Successfully uploaded image!");
+                    return data.json()
+                }
+            }).then((data) => {
+                console.log(data)
+            })
+            .catch(function (error) {
+                console.log("Fetch error: " + error);
+            });
 
         fetch("http://127.0.0.1:5000/create_new_listing", {
             method: 'POST',
