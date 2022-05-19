@@ -28,12 +28,14 @@ def register():
 
         return jsonify("Sended")
 
+
 '''
 @app.route("/test", methods=["GET"])
 def test():
     print(url_for('static', filename="chatty.png"))
     return redirect(url_for('static', filename="chatty.png"))
 '''
+
 
 @app.route("/login_user", methods=["POST"])
 def login():
@@ -165,7 +167,7 @@ def modify_listing():
     textbookToModify = Textbook.query.filter_by(
         id=int(modifiedTextbookData["id"])).first()
 
-    if(request.files['image'])
+    if(request.files['image']):
         image = request.files['image']
         image.save(url_for('static', filename=image.filename))
         textbookToModify.image_url = url_for('static', filename=image.filename)
@@ -180,7 +182,6 @@ def modify_listing():
     textbookToModify.description = modifiedTextbookData["description"]
     textbookToModify.quality = modifiedTextbookData["quality"]
     textbookToModify.available = modifiedTextbookData["available"]
-    
 
     db.session.commit()
     return jsonify("Sended")
@@ -193,7 +194,6 @@ def receive_image():
     file.save(os.path.join(app.config['UPLOAD_FOLDER'], file.filename))
 
     return jsonify("Sended :)")
-
 
 
 def textbook_array_to_json(textbooks):
