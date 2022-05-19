@@ -57,6 +57,7 @@ def login():
 
         return jsonify("Logging in")
 
+
 @app.route("/save_image", methods=["POST"])
 def save_image():
     image = request.files['image']
@@ -180,8 +181,8 @@ def modify_listing():
     textbookToModify.description = modifiedTextbookData["description"]
     textbookToModify.quality = modifiedTextbookData["quality"]
     textbookToModify.available = modifiedTextbookData["available"]
-    textbookToModify.imageName = url_for('static', filename=newTextbookData["imageName"])
-    
+    textbookToModify.image_url = url_for(
+        'static', filename=modifiedTextbookData["imageName"])
 
     db.session.commit()
     return jsonify("Sended")
