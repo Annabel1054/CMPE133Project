@@ -65,6 +65,7 @@ export default function WatchList() {
                             sellerEmail={listing.email}
                             name={listing.firstName + " " + listing.lastName}
                             phoneNum={listing.phoneNum}
+                            image={listing.imgUrl}
                         />
                     ))
                 )}

@@ -8,7 +8,7 @@ import { useState } from "react";
 
 
 export default function WatchlistListing(props) {
-    const { title, isbn, author, price, oldPrice, quality, description, course, name, phoneNum, sellerEmail, id } = props;
+    const { title, isbn, author, price, oldPrice, quality, description, course, name, phoneNum, sellerEmail, id, image } = props;
 
     const [buttonpopup, setbuttonpopup] = useState(false);
     const [show, setShow] = useState(false);
@@ -50,7 +50,7 @@ export default function WatchlistListing(props) {
     return (
         <div className="listingContainer">
             <Card style={{ width: '80%' }}>
-                <Card.Img src={calculusImage} />
+                <Card.Img src={'http://127.0.0.1:5000' + image} />
                 <Card.Body>
                     <Card.Title>{title}, {author}  </Card.Title>
 

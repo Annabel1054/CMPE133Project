@@ -68,8 +68,8 @@ export default function SignUpPage() {
                     if (data.status !== 200)
                         alert("Having error")
                     else {
+                        alert("Your account was successfully created!");
                         window.location.replace("/login");
-                        console.log("Successfully created account!");
                     }
                 })
                 .catch(function (error) {

@@ -27,7 +27,7 @@ export default function LoginPage() {
         })
             .then(data => {
                 if (data.status !== 200)
-                    alert("Having error")
+                    alert("Error: Please make sure you entered the correct email and password.")
                 else {
                     console.log("Successfully logged in!");
                     localStorage.setItem("email", email);
@@ -51,6 +51,7 @@ export default function LoginPage() {
                         <Form.Control
                             type='text'
                             value={email}
+                            required
                             onChange={e => setEmail(e.target.value)}
                             placeholder="Enter SJSU Email"
                         />
@@ -63,6 +64,7 @@ export default function LoginPage() {
                             type='password'
                             placeholder="Enter Password"
                             value={password}
+                            required
                             onChange={e => setPassword(e.target.value)}
                         />
                     </Form.Group>

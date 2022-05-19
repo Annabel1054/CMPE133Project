@@ -39,7 +39,7 @@
 
 .maindiv {
     min-height: 100vh;
-    background-color: #D3E5D2;
+    /* background-color: #D3E5D2; */
 }
 
 .listingContainer {
@@ -54,5 +54,5 @@
 }
 
 .contact {
-    margin-left: 40%;
+    margin-left: 60%;
 }

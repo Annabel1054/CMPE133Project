@@ -1,7 +1,7 @@
 import LoggedInNavBar from "../Navbar/LoggedInNavbar";
 import TextbookListing from "../TextbookListing/TextbookListing";
 import React, { useEffect } from "react";
-import { InputGroup, DropdownButton, Dropdown, FormControl, Button } from 'react-bootstrap';
+import { InputGroup, DropdownButton, Dropdown, FormControl, Button, Form } from 'react-bootstrap';
 import './styles.css';
 
 export default function FindTextbooks() {
@@ -89,12 +89,14 @@ export default function FindTextbooks() {
                     <Dropdown.Divider />
                     <Dropdown.Item onClick={(event) => { setSearchBy("Course") }}>Course</Dropdown.Item>
                 </DropdownButton>
-                <FormControl className="inputBox" required onChange={(event) => { setResult(event.target.value) }} value={result} />
-                <Button className="goButton" onClick={searchListings}>
-                    Go
-                </Button>
-            </InputGroup>
+                <Form onSubmit={searchListings}>
+                    <FormControl className="inputBox" placeholder={"Enter " + searchBy} required onChange={(event) => { setResult(event.target.value) }} value={result} />
+                    <Button className="goButton" type="submit">
+                        Go
+                    </Button>
+                </Form>
 
+            </InputGroup>
 
             {(Object.keys(searchedListings.textbooks).length === 0) ? (
                 <p className="noTextbookMessage"> No Textbooks Found </p>
@@ -113,6 +115,7 @@ export default function FindTextbooks() {
                         name={listing.firstName + " " + listing.lastName}
                         email={listing.email}
                         phoneNum={listing.phoneNum}
+                        image={listing.imgUrl}
                     />
                 ))
             )}

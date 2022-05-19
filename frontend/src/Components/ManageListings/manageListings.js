@@ -60,6 +60,7 @@ export default function ManageListings() {
                         id={listing.id}
                         email={email}
                         buyers={listing.buyers}
+                        image={listing.imgUrl}
                     />
                 ))
             )}

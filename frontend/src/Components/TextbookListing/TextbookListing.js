@@ -4,7 +4,7 @@ import './styles.css';
 
 export default function TextbookListing(props) {
     const email = localStorage.getItem('email');
-    const { title, isbn, author, price, quality, description, course, name, originalPrice, id } = props;
+    const { title, isbn, author, price, quality, description, course, name, originalPrice, id, image } = props;
 
     const addToWatchlist = () => {
 
@@ -37,7 +37,7 @@ export default function TextbookListing(props) {
     return (
         <div className="listingContainer">
             <Card style={{ width: '80%' }}>
-                <Card.Img src={calculusImage} />
+                <Card.Img src={"http://127.0.0.1:5000" + image} />
                 <Card.Body>
                     <Card.Title>{title}, {author}</Card.Title>
                     <Card.Text>ISBN: {isbn}</Card.Text>

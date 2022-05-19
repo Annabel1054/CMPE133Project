@@ -13,6 +13,7 @@ export default function EditListing() {
     const [course, setCourse] = useState(location.state.course);
     const [quality, setQuality] = useState(location.state.quality);
     const [image, setImage] = useState('');
+    const [imageName, setImageName] = useState('');
     const [price, setPrice] = useState(location.state.price);
     const [originalPrice, setOriginalPrice] = useState(location.state.originalPrice);
     const [description, setDescription] = useState(location.state.description);
@@ -21,6 +22,13 @@ export default function EditListing() {
     const navigateToManageListings = () => {
         history.push('/manageListings');
     };
+
+    const printImage = (e) => {
+        setImage(e.target.files[0]);
+        setImageName(e.target.value);
+    }
+
+    const email = localStorage.getItem('email');
 
     const onSubmit = (e) => {
         e.preventDefault();
@@ -35,38 +43,97 @@ export default function EditListing() {
         console.log("Course Name: " + course);
         // Add a POST method to backend to edit textbook listing.
 
-        let listing = {
-            id: location.state.id,
-            title: title,
-            author: author,
-            isbn: isbn,
-            price: price,
-            originalPrice: originalPrice,
-            course: course,
-            // file: image,
-            email: location.state.email,
-            description: description,
-            quality: quality,
-            available: 1,
-        }
-
-        fetch("http://127.0.0.1:5000/modify_listing", {
-            method: 'POST',
-            body: JSON.stringify(listing),
-            headers: {
-                'Content-Type': 'application/json'
+        if (image == '') {
+            let listing = {
+                id: location.state.id,
+                title: title,
+                author: author,
+                isbn: isbn,
+                price: price,
+                originalPrice: originalPrice,
+                course: course,
+                email: location.state.email,
+                description: description,
+                quality: quality,
+                available: 1,
             }
-        })
-            .then(data => {
-                if (data.status !== 200)
-                    alert("Having error")
-                else {
-                    alert("Successfully updated your textbook listing.")
+
+            fetch("http://127.0.0.1:5000/modify_listing", {
+                method: 'POST',
+                body: JSON.stringify(listing),
+                headers: {
+                    'Content-Type': 'application/json'
                 }
             })
-            .catch(function (error) {
-                console.log("Fetch error: " + error);
-            });
+                .then(data => {
+                    if (data.status !== 200)
+                        alert("Having error")
+                    else {
+                        alert("Successfully updated your textbook listing.")
+                        window.location.replace("/manageListings");
+                    }
+                })
+                .catch(function (error) {
+                    console.log("Fetch error: " + error);
+                });
+        } else {
+            const data = new FormData();
+            data.append('image', image);
+            console.log("IMAGE NAME")
+            console.log(image.name)
+
+            let listingData = {
+                id: location.state.id,
+                title: title,
+                author: author,
+                isbn: isbn,
+                price: price,
+                originalPrice: originalPrice,
+                course: course,
+                imageName: image.name,
+                email: email,
+                description: description,
+                quality: quality,
+                available: 1,
+            }
+
+            fetch("http://127.0.0.1:5000/save_image", {
+                method: 'POST',
+                body: data,
+            })
+                .then(data => {
+                    if (data.status !== 200)
+                        alert("Having error")
+                    else {
+                        console.log("Successfully uploaded image!");
+                        return data.json()
+                    }
+                }).then((data) => {
+                    console.log(data)
+                })
+                .catch(function (error) {
+                    console.log("Fetch error: " + error);
+                });
+
+            fetch("http://127.0.0.1:5000/modify_listing", {
+                method: 'POST',
+                body: JSON.stringify(listingData),
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
+                .then(data => {
+                    if (data.status !== 200)
+                        alert("Having error")
+                    else {
+                        alert("Successfully updated your textbook listing.")
+                        window.location.replace("/manageListings");
+                    }
+                })
+                .catch(function (error) {
+                    console.log("Fetch error: " + error);
+                });
+        }
     }
 
     return (
@@ -156,8 +223,8 @@ export default function EditListing() {
                                 type="file"
                                 accept="image/*"
                                 id="textbookImage"
-                                value={image}
-                                onChange={e => setImage(e.target.value)}
+                                value={imageName}
+                                onChange={e => printImage(e)}
                             />
                         </Form.Group>
                     </Row>

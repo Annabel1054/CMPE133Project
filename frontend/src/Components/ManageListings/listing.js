@@ -4,7 +4,7 @@ import './styles.css';
 import { useHistory, useLocation } from "react-router-dom";
 
 export default function Listing(props) {
-    const { title, isbn, author, price, quality, description, course, originalPrice, id, email, buyers } = props;
+    const { title, isbn, author, price, quality, description, course, originalPrice, id, email, buyers, image } = props;
     console.log(buyers[0])
     let buyerStrings = []
     buyers.map((buyer, i) => {
@@ -24,7 +24,7 @@ export default function Listing(props) {
 
     const editClick = () => {
         history.push('/editListing', {
-            id, title, originalPrice, price, author, course, quality, description, isbn, email
+            id, title, originalPrice, price, author, course, quality, description, isbn, email, image
         });
     };
 
@@ -37,7 +37,7 @@ export default function Listing(props) {
             price: price,
             originalPrice: originalPrice,
             course: course,
-            // file: image,
+            imageName: 'sold',
             email: email,
             description: description,
             quality: quality,
@@ -67,7 +67,7 @@ export default function Listing(props) {
     return (
         <div className="listingContainer">
             <Card style={{ width: '80%' }}>
-                <Card.Img src={calculusImage} />
+                <Card.Img src={'http://127.0.0.1:5000' + image} />
                 <Card.Body>
                     <Card.Title>{title}, {author}</Card.Title>
                     <Card.Text>ISBN: {isbn}</Card.Text>
