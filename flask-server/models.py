@@ -2,6 +2,13 @@ from server import db
 from server import login_manager
 from werkzeug.security import check_password_hash, generate_password_hash
 
+watchlists_association_table = db.Table('watchlists_association', db.Model.metadata,
+                                        db.Column('user_id', db.Integer,
+                                                  db.ForeignKey('User.id')),
+                                        db.Column(
+                                            'textbook_id', db.Integer, db.ForeignKey("Textbook.id"))
+
+                                        )
 
 
 class User(db.Model):
@@ -12,6 +19,7 @@ class User(db.Model):
         self.lastName = lastName
         self.phoneNum = phoneNum
 
+    __tablename__ = 'User'
     id = db.Column(db.Integer, primary_key=True)
 
     email = db.Column(db.String(64), index=True, unique=True)
@@ -22,7 +30,8 @@ class User(db.Model):
 
     phoneNum = db.Column(db.String(64), index=True)
 
-    #textbooks = db.relationship("Textbook", backref="user")
+    textbooks = db.relationship(
+        "Textbook", secondary=watchlists_association_table, back_populates="users")
 
     def set_password(self, password):
         self.password = password
@@ -50,7 +59,7 @@ class User(db.Model):
 
 
 class Textbook(db.Model):
-    def __init__(self, email, title, author, isbn, price, originalPrice, courseName, image, description, quality, sellerFirstName, sellerLastName, sellerPhoneNo):
+    def __init__(self, email, title, author, isbn, price, originalPrice, courseName, description, quality, sellerFirstName, sellerLastName, sellerPhoneNo, image_url):
 
         self.email = email
         self.title = title
@@ -59,7 +68,6 @@ class Textbook(db.Model):
         self.price = price
         self.originalPrice = originalPrice
         self.courseName = courseName
-        self.image = image
         self.description = description
         self.quality = quality
         self.available = 1
@@ -67,6 +75,12 @@ class Textbook(db.Model):
         self.sellerFirstName = sellerFirstName
         self.sellerLastName = sellerLastName
         self.sellerPhoneNo = sellerPhoneNo
+        self.image_url = image_url
+
+    __tablename__ = 'Textbook'
+
+    users = db.relationship(
+        "User", secondary=watchlists_association_table, back_populates="textbooks")
 
     id = db.Column(db.Integer, primary_key=True)
 
@@ -77,7 +91,7 @@ class Textbook(db.Model):
     price = db.Column(db.String(64), index=True)
     originalPrice = db.Column(db.String(64), index=True)
     courseName = db.Column(db.String(64), index=True)
-    image = db.Column(db.String(64), index=True)
+    image_url = db.Column(db.String(64), index=True)
 
     description = db.Column(db.String(5092), index=True)
     quality = db.Column(db.String(64), index=True)
@@ -88,10 +102,7 @@ class Textbook(db.Model):
     sellerLastName = db.Column(db.String(64), index=True)
     sellerPhoneNo = db.Column(db.String(64), index=True)
 
-    #user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
-
 
 @login_manager.user_loader
 def load_user(user_id):
     return User.query.get(int(user_id))
-

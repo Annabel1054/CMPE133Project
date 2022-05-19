@@ -4,13 +4,27 @@ import './styles.css';
 import { useHistory, useLocation } from "react-router-dom";
 
 export default function Listing(props) {
-    const { title, isbn, author, price, quality, description, course, originalPrice, id, email } = props;
+    const { title, isbn, author, price, quality, description, course, originalPrice, id, email, buyers, image } = props;
+    console.log(buyers[0])
+    let buyerStrings = []
+    buyers.map((buyer, i) => {
+        console.log(buyer.buyerEmail)
+        console.log(buyer.buyerFirstName)
+        console.log(buyer.buyerLastName)
+        console.log(buyer.buyerPhoneNum)
+        buyerStrings[i] = buyer.buyerEmail
+    })
+
+    console.log(buyerStrings)
+    buyerStrings.map((bstring) => {
+        console.log(bstring)
+    })
 
     const history = useHistory();
 
     const editClick = () => {
         history.push('/editListing', {
-            id, title, originalPrice, price, author, course, quality, description, isbn, email
+            id, title, originalPrice, price, author, course, quality, description, isbn, email, image
         });
     };
 
@@ -23,7 +37,7 @@ export default function Listing(props) {
             price: price,
             originalPrice: originalPrice,
             course: course,
-            // file: image,
+            imageName: 'sold',
             email: email,
             description: description,
             quality: quality,
@@ -53,7 +67,7 @@ export default function Listing(props) {
     return (
         <div className="listingContainer">
             <Card style={{ width: '80%' }}>
-                <Card.Img src={calculusImage} />
+                <Card.Img src={'http://127.0.0.1:5000' + image} />
                 <Card.Body>
                     <Card.Title>{title}, {author}</Card.Title>
                     <Card.Text>ISBN: {isbn}</Card.Text>
@@ -62,17 +76,25 @@ export default function Listing(props) {
                     <Card.Text>
                         {description}
                     </Card.Text>
+                    <Card.Text>
+                        {buyers.length != 0 && (
+                            <p> Interested Buyers: </p>
+                        )}
+                        {buyers.map((buyer) => (
+                            <p>{buyer.buyerFirstName} {buyer.buyerLastName} | {buyer.buyerEmail} | ({buyer.buyerPhoneNum.substring(0, 3)}){buyer.buyerPhoneNum.substring(3, 6)}-{buyer.buyerPhoneNum.substring(6, 10)}</p>
+                        ))}
+                    </Card.Text>
                 </Card.Body>
                 <Card.Body className="rightSection">
-                    <Card.Text className="sellerName">Original: ${originalPrice}</Card.Text>
+                    <Card.Text className="sellerName">Interested Buyers: {buyers.length}</Card.Text>
                     <div>
+                        <Card.Text className="sellerName">Original: ${originalPrice}</Card.Text>
                         <Card.Text className="price">${price}</Card.Text>
-
                     </div>
                     <Button className='listingButtons' onClick={editClick} style={{ width: '150px', backgroundColor: '#829A7E' }} variant="primary">Edit Listing</Button>
                     <Button className='listingButtons' onClick={markAsSold} style={{ width: '150px', backgroundColor: '#829A7E' }} variant="primary">Mark as Sold</Button>
                 </Card.Body>
             </Card>
-        </div>
+        </div >
     );
 }

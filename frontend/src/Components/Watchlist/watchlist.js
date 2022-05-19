@@ -3,9 +3,44 @@ import { Container, Button, Card, Text } from "react-bootstrap";
 import calculusImage from "./Calculus Textbook.jpg";
 import "./WatchlistStyles.css";
 import WatchlistListing from "./WatchlistListing";
+import React, { useEffect, useState } from 'react';
 
 
 export default function WatchList() {
+    const [watchlistListings, setWatclistListings] = useState({
+        textbooks: {}
+    });
+    const email = localStorage.getItem('email');
+
+    useEffect(() => {
+        if (email !== undefined) {
+            let userEmail = {
+                email: email
+            }
+
+            fetch("http://127.0.0.1:5000/get_user_watchlist", {
+                method: 'POST',
+                body: JSON.stringify(userEmail),
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
+                .then(data => {
+                    if (data.status !== 200)
+                        alert("Having error")
+                    else {
+                        return data.json();
+                    }
+                }).then(data => {
+                    setWatclistListings(data);
+                    console.log(data);
+                })
+                .catch(function (error) {
+                    console.log("Fetch error: " + error);
+                });
+        }
+    }, [])
+
 
     return (
         <div className="maindiv">
@@ -13,18 +48,29 @@ export default function WatchList() {
 
             <div className="watchlistContainer">
                 <div className="watchlistHeader">Your Watchlist</div>
-                <WatchlistListing
-                    title="Calculus"
-                    author="Larson Hostetler Edwards"
-                    isbn="9809238423"
-                    quality="Good"
-                    course="MATH31"
-                    description="This textbook is new."
-                    oldPrice="100"
-                    price="87"
-                    name="John Doe"
-                />
+                {(Object.keys(watchlistListings.textbooks).length === 0) ? (
+                    <p className="noTextbookMessage"> No Textbooks In Watchlist! Start Searching :) </p>
+                ) : (
+                    watchlistListings.textbooks.map((listing) => (
+                        <WatchlistListing
+                            title={listing.title}
+                            author={listing.author}
+                            isbn={listing.isbn}
+                            quality={listing.quality}
+                            course={listing.courseName}
+                            description={listing.description}
+                            price={listing.price}
+                            oldPrice={listing.originalPrice}
+                            id={listing.id}
+                            sellerEmail={listing.email}
+                            name={listing.firstName + " " + listing.lastName}
+                            phoneNum={listing.phoneNum}
+                            image={listing.imgUrl}
+                        />
+                    ))
+                )}
             </div>
+
 
         </div>
 

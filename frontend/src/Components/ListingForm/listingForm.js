@@ -18,22 +18,15 @@ export default function ListingForm() {
     const email = localStorage.getItem('email');
 
     const printImage = (e) => {
-        // console.log(e.target.files[0]);
-        // const data = new FormData();
-        // data.append('file', this.uploadInput.files[0]);
-        // data.append('filename', this.fileName.value);
         setImage(e.target.files[0]);
         setImageName(e.target.value);
-        console.log(email);
     }
 
     const onSubmit = (e) => {
         e.preventDefault();
 
         const data = new FormData();
-        data.append('file', image);
-        console.log(image);
-        console.log(data);
+        data.append('image', image);
 
         console.log("Textbook title: " + title);
         console.log("ISBN: " + isbn);
@@ -53,11 +46,29 @@ export default function ListingForm() {
             price: price,
             originalPrice: originalPrice,
             course: course,
-            // file: image,
+            imageName: image.name,
             email: email,
             description: description,
             quality: quality,
         }
+
+        fetch("http://127.0.0.1:5000/save_image", {
+            method: 'POST',
+            body: data,
+        })
+            .then(data => {
+                if (data.status !== 200)
+                    alert("Having error")
+                else {
+                    console.log("Successfully uploaded image!");
+                    return data.json()
+                }
+            }).then((data) => {
+                console.log(data)
+            })
+            .catch(function (error) {
+                console.log("Fetch error: " + error);
+            });
 
         fetch("http://127.0.0.1:5000/create_new_listing", {
             method: 'POST',
@@ -70,7 +81,8 @@ export default function ListingForm() {
                 if (data.status !== 200)
                     alert("Having error")
                 else {
-                    console.log("Successfully created a textbook listing!");
+                    console.log("Your textbook listing was successfully created!");
+                    window.location.replace("/manageListings");
                 }
             })
             .catch(function (error) {
@@ -91,6 +103,7 @@ export default function ListingForm() {
                             <Form.Control
                                 id="textbookTitle"
                                 value={title}
+                                required
                                 onChange={e => setTitle(e.target.value)}
                                 placeholder="Enter Textbook Title"
                             />
@@ -101,6 +114,7 @@ export default function ListingForm() {
                                 id="author"
                                 placeholder="Enter Author Name"
                                 value={author}
+                                required
                                 onChange={e => setAuthor(e.target.value)}
                             />
                         </Form.Group>
@@ -110,6 +124,7 @@ export default function ListingForm() {
                                 id="isbn"
                                 placeholder="Enter ISBN"
                                 value={isbn}
+                                required
                                 onChange={e => setIsbn(e.target.value)}
                             />
                         </Form.Group>
@@ -122,6 +137,7 @@ export default function ListingForm() {
                                 <FormControl
                                     type="number"
                                     id="price"
+                                    required
                                     placeholder="15.00"
                                     value={price}
                                     onChange={e => setPrice(e.target.value)}
@@ -136,6 +152,7 @@ export default function ListingForm() {
                                     type="number"
                                     id="originalPrice"
                                     placeholder="35.00"
+                                    required
                                     value={originalPrice}
                                     onChange={e => setOriginalPrice(e.target.value)}
                                 />
@@ -147,6 +164,7 @@ export default function ListingForm() {
                                 id="course"
                                 placeholder="Ex: CS46A"
                                 value={course}
+                                required
                                 onChange={e => setCourse(e.target.value)}
                             />
                         </Form.Group>
@@ -156,9 +174,9 @@ export default function ListingForm() {
                                 type="file"
                                 accept="image/*"
                                 id="textbookImage"
+                                required
                                 value={imageName}
                                 onChange={e => printImage(e)}
-                            // onChange={e => setImage(e.target.value)}
                             />
                         </Form.Group>
                     </Row>
@@ -168,6 +186,7 @@ export default function ListingForm() {
                             <Form.Control
                                 as="textarea"
                                 rows={3}
+                                required
                                 id="description"
                                 placeholder="Tell us about your book."
                                 value={description}

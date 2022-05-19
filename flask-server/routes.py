@@ -1,9 +1,10 @@
 from server import app, db
-from flask import request, jsonify
+from flask import request, jsonify, redirect, url_for
 from werkzeug.utils import secure_filename
 from models import *
 from flask_login import login_user, current_user
 import json
+import os
 
 
 @app.route("/members")
@@ -28,6 +29,14 @@ def register():
         return jsonify("Sended")
 
 
+'''
+@app.route("/test", methods=["GET"])
+def test():
+    print(url_for('static', filename="chatty.png"))
+    return redirect(url_for('static', filename="chatty.png"))
+'''
+
+
 @app.route("/login_user", methods=["POST"])
 def login():
     userLoginData = request.get_json()
@@ -46,7 +55,14 @@ def login():
 
         login_user(user)
 
-        return jsonify("Sended")
+        return jsonify("Logging in")
+
+
+@app.route("/save_image", methods=["POST"])
+def save_image():
+    image = request.files['image']
+    image.save(os.path.join(app.config['UPLOAD_FOLDER'], image.filename))
+    return jsonify("saved image")
 
 
 @app.route("/create_new_listing", methods=["POST"])
@@ -57,7 +73,7 @@ def new_textbook():
     user = User.query.filter_by(email=newTextbookData['email']).first()
 
     textbook = Textbook(newTextbookData["email"], newTextbookData["title"], newTextbookData["author"], newTextbookData["isbn"], newTextbookData["price"], newTextbookData["originalPrice"],
-                        newTextbookData["course"], 'temp image', newTextbookData["description"], newTextbookData["quality"], user.firstName, user.lastName, user.phoneNum)
+                        newTextbookData["course"], newTextbookData["description"], newTextbookData["quality"], user.firstName, user.lastName, user.phoneNum, url_for('static', filename=newTextbookData["imageName"]))
 
     db.session.add(textbook)
     db.session.commit()
@@ -102,9 +118,56 @@ def find_listings():
         return textbook_array_to_json(textbooks)
 
 
+@app.route("/get_user_watchlist", methods=["POST"])
+def get_user_watchlist():
+    if request.method == "POST":
+        userInfo = request.get_json()
+
+        user = User.query.filter(User.email.like(
+            f"%{userInfo['email']}%")).first()
+
+        availableTextbooks = Textbook.query.filter(
+            Textbook.users.any(User.id == user.id)).filter(Textbook.available.like("1")).all()
+
+        return textbook_array_to_json(availableTextbooks)
+
+
+@app.route("/add_to_watchlist", methods=["POST"])
+def add_to_watchlist():
+    if request.method == "POST":
+        userRequestInfo = request.get_json()
+
+        user = User.query.filter_by(email=userRequestInfo["email"]).first()
+        textbook = Textbook.query.filter_by(
+            id=userRequestInfo["textbookId"]).first()
+
+        user.textbooks.append(textbook)
+
+        db.session.commit()
+
+        return jsonify("Sended")
+
+
+@app.route("/remove_from_watchlist", methods=["POST"])
+def remove_from_watchlist():
+    if request.method == "POST":
+        userRequestInfo = request.get_json()
+
+        user = User.query.filter_by(email=userRequestInfo["email"]).first()
+        textbook = Textbook.query.filter_by(
+            id=userRequestInfo["textbookId"]).first()
+
+        user.textbooks.remove(textbook)
+
+        db.session.commit()
+
+        return jsonify("Sended")
+
+
 @app.route("/modify_listing", methods=["POST"])
 def modify_listing():
     modifiedTextbookData = request.get_json()
+
     textbookToModify = Textbook.query.filter_by(
         id=int(modifiedTextbookData["id"])).first()
 
@@ -118,9 +181,20 @@ def modify_listing():
     textbookToModify.description = modifiedTextbookData["description"]
     textbookToModify.quality = modifiedTextbookData["quality"]
     textbookToModify.available = modifiedTextbookData["available"]
+    textbookToModify.image_url = url_for(
+        'static', filename=modifiedTextbookData["imageName"])
 
     db.session.commit()
     return jsonify("Sended")
+
+
+@app.route("/receive_image", methods=["POST"])
+def receive_image():
+
+    file = request.files['file']
+    file.save(os.path.join(app.config['UPLOAD_FOLDER'], file.filename))
+
+    return jsonify("Sended :)")
 
 
 def textbook_array_to_json(textbooks):
@@ -140,8 +214,23 @@ def textbook_array_to_json(textbooks):
                 "\"originalPrice\": \"" + t.originalPrice + "\"," + \
                 "\"courseName\": \"" + t.courseName + "\"," + \
                 "\"description\": \"" + t.description + "\"," + \
-                "\"quality\": \"" + t.quality + \
-                "\"},"
+                "\"quality\": \"" + t.quality + "\"," + \
+                "\"imgUrl\": \"" + t.image_url + "\"," + \
+                "\"buyers\": ["
+
+            for b in t.users:
+                jsonTextbooks = jsonTextbooks + "{" + \
+                    "\"buyerFirstName\": \"" + b.firstName + "\"," + \
+                    "\"buyerLastName\": \"" + b.lastName + "\"," + \
+                    "\"buyerEmail\": \"" + b.email + "\"," + \
+                    "\"buyerPhoneNum\": \"" + b.phoneNum + "\"}"
+
+                if b != t.users[-1]:
+                    jsonTextbooks = jsonTextbooks + ","
+
+            jsonTextbooks = jsonTextbooks + "]"
+
+            jsonTextbooks = jsonTextbooks + "},"
         else:
             jsonTextbooks = jsonTextbooks + "{" + \
                 "\"id\": \"" + str(t.id) + "\"," + \
@@ -156,9 +245,26 @@ def textbook_array_to_json(textbooks):
                 "\"originalPrice\": \"" + t.originalPrice + "\"," + \
                 "\"courseName\": \"" + t.courseName + "\"," + \
                 "\"description\": \"" + t.description + "\"," + \
-                "\"quality\": \"" + t.quality + \
-                "\"}"
+                "\"quality\": \"" + t.quality + "\"," + \
+                "\"imgUrl\": \"" + t.image_url + "\"," + \
+                "\"buyers\": ["
+
+            for b in t.users:
+                jsonTextbooks = jsonTextbooks + "{" + \
+                    "\"buyerFirstName\": \"" + b.firstName + "\"," + \
+                    "\"buyerLastName\": \"" + b.lastName + "\"," + \
+                    "\"buyerEmail\": \"" + b.email + "\"," + \
+                    "\"buyerPhoneNum\": \"" + b.phoneNum + "\"}"
+
+                if b != t.users[-1]:
+                    jsonTextbooks = jsonTextbooks + ","
+
+            jsonTextbooks = jsonTextbooks + "]"
+
+            jsonTextbooks = jsonTextbooks + "}"
 
     jsonTextbooks = jsonTextbooks + "]}"
+
+    print(jsonTextbooks)
 
     return jsonTextbooks
