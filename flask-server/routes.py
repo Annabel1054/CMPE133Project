@@ -60,7 +60,7 @@ def login():
 @app.route("/save_image", methods=["POST"])
 def save_image():
     image = request.files['image']
-    image.save(url_for('static', filename=image.filename))
+    image.save(os.path.join(app.config['UPLOAD_FOLDER'], image.filename))
     return jsonify("saved image")
 
 
@@ -68,8 +68,6 @@ def save_image():
 def new_textbook():
 
     newTextbookData = request.get_json()
-
-    
 
     user = User.query.filter_by(email=newTextbookData['email']).first()
 

@@ -59,7 +59,7 @@ class User(db.Model):
 
 
 class Textbook(db.Model):
-    def __init__(self, email, title, author, isbn, price, originalPrice, courseName, description, quality, sellerFirstName, sellerLastName, sellerPhoneNo, imageName):
+    def __init__(self, email, title, author, isbn, price, originalPrice, courseName, description, quality, sellerFirstName, sellerLastName, sellerPhoneNo, image_url):
 
         self.email = email
         self.title = title
@@ -75,7 +75,7 @@ class Textbook(db.Model):
         self.sellerFirstName = sellerFirstName
         self.sellerLastName = sellerLastName
         self.sellerPhoneNo = sellerPhoneNo
-        self.imageName = image_url
+        self.image_url = image_url
 
     __tablename__ = 'Textbook'
 
