@@ -3,10 +3,15 @@ import { useState } from 'react';
 import { Button, Form } from 'react-bootstrap';
 import './Login.css';
 
+/*
+    Login Page
+*/
 export default function LoginPage() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
+    // On submit, send the user's credentials to the backend and see if the credentials given are valid.
+    // If the password and email are correct, user will be logged in.
     const onSubmit = (e) => {
         e.preventDefault();
         console.log("Email: " + email);
@@ -38,6 +43,7 @@ export default function LoginPage() {
                 console.log("Fetch error: " + error);
             });
     }
+
     return (
         <div className="background">
             <NavBar />

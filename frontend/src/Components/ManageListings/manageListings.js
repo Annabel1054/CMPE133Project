@@ -4,6 +4,9 @@ import { useHistory } from "react-router-dom";
 import React, { useState, useEffect } from "react";
 import Listing from "./listing";
 
+/*
+    Manage Listings Page
+*/
 export default function ManageListings() {
 
     const [listings, setListings] = useState({
@@ -12,6 +15,7 @@ export default function ManageListings() {
 
     const email = localStorage.getItem('email');
 
+    // Fetch the user's listings and save it into a variable so that the listings can be rendered.
     useEffect(() => {
         if (email !== undefined) {
             let userEmail = {

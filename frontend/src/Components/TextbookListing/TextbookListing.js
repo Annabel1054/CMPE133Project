@@ -1,11 +1,14 @@
 import { Container, Button, Card, Text } from "react-bootstrap";
-import calculusImage from "./Calculus Textbook.jpg"
 import './styles.css';
 
+/*
+    Textbook Listing Component that is renderd in Main Search Page.
+*/
 export default function TextbookListing(props) {
     const email = localStorage.getItem('email');
     const { title, isbn, author, price, quality, description, course, name, originalPrice, id, image } = props;
 
+    // When user presses "add to watchlist", save the textbook listing to the user.
     const addToWatchlist = () => {
 
         let watchlistData = {

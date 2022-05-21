@@ -2,6 +2,9 @@ import { Navbar, Nav } from "react-bootstrap";
 import { Container } from "react-bootstrap";
 import './styles.css';
 
+/*
+    Navigation Bar - displayed when users have not logged in.
+*/
 export default function NavBar() {
     return (
         <Navbar className="navbar-background" variant="dark">

@@ -2,7 +2,9 @@ import React, { Component } from 'react'
 
 import styled from 'styled-components';
 
-
+/*
+    Footer on Home Page
+*/
 
 
 const Container = styled.div`
@@ -73,21 +75,21 @@ const Icon = styled.i`
 export default class Footer extends Component {
     render() {
         return (
-            <Container id ='container'>
+            <Container id='container'>
                 <Wrapper>
                     <Row>
                         <Column>
                             <Title>Contact</Title>
                             <Link href="#">E-mail</Link>
                             <Link href="#">Phone</Link>
-                            <Link href="#">Address <br/> </Link>
+                            <Link href="#">Address <br /> </Link>
                             <Link></Link>
                         </Column>
                         <Column>
                             <Title href="#">Services</Title>
                             <Link href="#">Buy TextBook</Link>
                             <Link href="#">Sell TextBook</Link>
-                            
+
                         </Column>
                         <Column>
                             <Title>Social</Title>

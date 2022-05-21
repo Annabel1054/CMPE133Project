@@ -1,12 +1,11 @@
-import { Container, Button, Card, Text, Modal } from "react-bootstrap";
-import calculusImage from "./Calculus Textbook.jpg"
+import { Button, Card, Text, Modal } from "react-bootstrap";
 import './WatchlistStyles.css';
-import { AiOutlineBorderRight, AiOutlineClose } from 'react-icons/ai';
-import Popup from "./Popup";
+import { AiOutlineClose } from 'react-icons/ai';
 import { useState } from "react";
 
-
-
+/*
+    Textbook Listing Component that is used in the Watchlist Page
+*/
 export default function WatchlistListing(props) {
     const { title, isbn, author, price, oldPrice, quality, description, course, name, phoneNum, sellerEmail, id, image } = props;
 
@@ -18,8 +17,8 @@ export default function WatchlistListing(props) {
 
     const email = localStorage.getItem('email');
 
+    // If user clicks the cancel button, the textbook listing will get removed from their Watchlist Page.
     const removeListing = () => {
-
         let removeData = {
             email: email,
             textbookId: id,
@@ -81,11 +80,3 @@ export default function WatchlistListing(props) {
         </div>
     );
 }
-
-
-{/* <Popup trigger={buttonpopup} setTrigger={setbuttonpopup}
-                title="Calculus"
-                name="John Doe"
-                contactnum="5852651284"
-                email='johndoe@sjsu.edu'
-                author="Larson Hostetler Edwards"> </Popup> */}

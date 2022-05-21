@@ -3,6 +3,9 @@ import { Button, Row, Form, InputGroup, FormControl } from 'react-bootstrap';
 import './styles.css';
 import NavBarLoggedIn from '../Navbar/LoggedInNavbar';
 
+/*
+    Create Listing Page
+*/
 export default function ListingForm() {
     const [title, setTitle] = useState('');
     const [isbn, setIsbn] = useState('');
@@ -17,11 +20,13 @@ export default function ListingForm() {
 
     const email = localStorage.getItem('email');
 
+    // Save the image file and image name inside variables.
     const printImage = (e) => {
         setImage(e.target.files[0]);
         setImageName(e.target.value);
     }
 
+    // On submit, save user's textbook listing into the database.
     const onSubmit = (e) => {
         e.preventDefault();
 
@@ -37,7 +42,6 @@ export default function ListingForm() {
         console.log("Description: " + description);
         console.log("Author Name: " + author);
         console.log("Course Name: " + course);
-        // Add a POST method to backend to submit textbook listing.
 
         let listingData = {
             title: title,
@@ -52,6 +56,7 @@ export default function ListingForm() {
             quality: quality,
         }
 
+        // Save inputted image in the database.
         fetch("http://127.0.0.1:5000/save_image", {
             method: 'POST',
             body: data,
@@ -70,6 +75,7 @@ export default function ListingForm() {
                 console.log("Fetch error: " + error);
             });
 
+        // Save textbook listing data into the database.
         fetch("http://127.0.0.1:5000/create_new_listing", {
             method: 'POST',
             body: JSON.stringify(listingData),

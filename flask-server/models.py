@@ -46,18 +46,6 @@ class User(db.Model):
     def get_id(self):
         return str(self.id)
 
-
-'''
-    todo: 
-        add seller contact info to User
-        add textbook model
-
-        add/modify/edit textbook calls to routes
-        add user verification to routes, as well as session info
-
-'''
-
-
 class Textbook(db.Model):
     def __init__(self, email, title, author, isbn, price, originalPrice, courseName, description, quality, sellerFirstName, sellerLastName, sellerPhoneNo, image_url):
 

@@ -29,14 +29,6 @@ def register():
         return jsonify("Sended")
 
 
-'''
-@app.route("/test", methods=["GET"])
-def test():
-    print(url_for('static', filename="chatty.png"))
-    return redirect(url_for('static', filename="chatty.png"))
-'''
-
-
 @app.route("/login_user", methods=["POST"])
 def login():
     userLoginData = request.get_json()
@@ -177,12 +169,14 @@ def modify_listing():
     textbookToModify.isbn = modifiedTextbookData["isbn"]
     textbookToModify.price = modifiedTextbookData["price"]
     textbookToModify.originalPrice = modifiedTextbookData["originalPrice"]
-    textbookToModify.course = modifiedTextbookData["course"]
+    textbookToModify.courseName = modifiedTextbookData["course"]
     textbookToModify.description = modifiedTextbookData["description"]
     textbookToModify.quality = modifiedTextbookData["quality"]
     textbookToModify.available = modifiedTextbookData["available"]
-    textbookToModify.image_url = url_for(
-        'static', filename=modifiedTextbookData["imageName"])
+
+    if "imageName" in modifiedTextbookData:
+        textbookToModify.image_url = url_for(
+            'static', filename=modifiedTextbookData["imageName"])
 
     db.session.commit()
     return jsonify("Sended")

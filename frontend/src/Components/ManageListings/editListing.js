@@ -4,6 +4,9 @@ import './styles.css';
 import NavBarLoggedIn from '../Navbar/LoggedInNavbar';
 import { useHistory, useLocation } from "react-router-dom";
 
+/*
+    Edit Listing Page
+*/
 export default function EditListing() {
     const location = useLocation();
 
@@ -18,11 +21,13 @@ export default function EditListing() {
     const [originalPrice, setOriginalPrice] = useState(location.state.originalPrice);
     const [description, setDescription] = useState(location.state.description);
 
+    // Navigate back to the original Manage Listing Page
     const history = useHistory();
     const navigateToManageListings = () => {
         history.push('/manageListings');
     };
 
+    // Save the image name and image file into variables.
     const printImage = (e) => {
         setImage(e.target.files[0]);
         setImageName(e.target.value);
@@ -30,6 +35,7 @@ export default function EditListing() {
 
     const email = localStorage.getItem('email');
 
+    // On submit, update the user's textbook listing with the inputted information.
     const onSubmit = (e) => {
         e.preventDefault();
         console.log("Textbook title: " + title);
@@ -41,8 +47,8 @@ export default function EditListing() {
         console.log("Description: " + description);
         console.log("Author Name: " + author);
         console.log("Course Name: " + course);
-        // Add a POST method to backend to edit textbook listing.
 
+        // If there is no image, send the following data to the backend.
         if (image == '') {
             let listing = {
                 id: location.state.id,
@@ -76,6 +82,7 @@ export default function EditListing() {
                 .catch(function (error) {
                     console.log("Fetch error: " + error);
                 });
+            // If there is an image, another api call will need to be made in order to save the image.
         } else {
             const data = new FormData();
             data.append('image', image);
@@ -97,6 +104,7 @@ export default function EditListing() {
                 available: 1,
             }
 
+            // Save image in database.
             fetch("http://127.0.0.1:5000/save_image", {
                 method: 'POST',
                 body: data,
@@ -115,6 +123,7 @@ export default function EditListing() {
                     console.log("Fetch error: " + error);
                 });
 
+            // Update the current textbook listing.
             fetch("http://127.0.0.1:5000/modify_listing", {
                 method: 'POST',
                 body: JSON.stringify(listingData),

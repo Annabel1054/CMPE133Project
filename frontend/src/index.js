@@ -12,6 +12,9 @@ import reportWebVitals from './reportWebVitals';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
 
+/*
+  Routes to various pages of the website.
+*/
 ReactDOM.render(
   <BrowserRouter>
     <Switch>

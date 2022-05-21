@@ -1,33 +1,30 @@
 import { Container, Button, Card, Text } from "react-bootstrap";
-import calculusImage from "./Calculus Textbook.jpg"
 import './styles.css';
 import { useHistory, useLocation } from "react-router-dom";
 
+/*
+    Textbook Listing Component that will be rendered in Manage Listings Page.
+*/
 export default function Listing(props) {
     const { title, isbn, author, price, quality, description, course, originalPrice, id, email, buyers, image } = props;
-    console.log(buyers[0])
+
+    // Store buyer information strings into an array so that frontend can easily render it.
     let buyerStrings = []
     buyers.map((buyer, i) => {
-        console.log(buyer.buyerEmail)
-        console.log(buyer.buyerFirstName)
-        console.log(buyer.buyerLastName)
-        console.log(buyer.buyerPhoneNum)
         buyerStrings[i] = buyer.buyerEmail
-    })
-
-    console.log(buyerStrings)
-    buyerStrings.map((bstring) => {
-        console.log(bstring)
     })
 
     const history = useHistory();
 
+    // User will be rerouted to edit listing page when they press "Edit Textbook"
+    // The following variables below will be passed into the edit listing page.
     const editClick = () => {
         history.push('/editListing', {
             id, title, originalPrice, price, author, course, quality, description, isbn, email, image
         });
     };
 
+    // When user marks listing as sold, we will update "available" to false (0) in the database.
     const markAsSold = () => {
         let listing = {
             id: id,

@@ -5,7 +5,9 @@ import Footer from '../Homepage/Footer';
 import pic7 from '../Images/pic7.jpg';
 import '../Homepage/Home.css';
 
-
+/*
+    Home Page
+*/
 const Home = () => {
   return (
     <div className="page-container">

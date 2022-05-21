@@ -5,6 +5,9 @@ import { useState } from 'react';
 import { Container, Form, Button, Row } from 'react-bootstrap';
 import { validEmail } from './RegExp.js';
 
+/*
+    Create User Account Page
+*/
 export default function SignUpPage() {
     const [email, setEmail] = useState('');
     const [emailErr, setEmailErr] = useState(false);
@@ -15,11 +18,13 @@ export default function SignUpPage() {
         setEmailErr(false);
         setPasswordErr(false);
 
+        // Make sure email includes "sjsu.edu" pattern
         if (!validEmail.test(email)) {
             setEmailErr(true);
             valid = false;
         }
 
+        // Checks that passwords match
         if (password !== reenterdpasssword) {
             setPasswordErr(true);
             valid = false;
@@ -37,6 +42,7 @@ export default function SignUpPage() {
     const [reenterdpasssword, setReEnterdPassword] = useState('');
 
 
+    // POST method is used to store user information in backend.
     const onSubmit = (e) => {
         e.preventDefault();
         console.log("FirstName: " + firstname);
@@ -45,7 +51,6 @@ export default function SignUpPage() {
         console.log("Phone: " + phone);
         console.log("Password: " + password);
         console.log("ReEnter: " + reenterdpasssword);
-        // Add a POST method to backend to create user.
 
         let userData = {
             email: email,
