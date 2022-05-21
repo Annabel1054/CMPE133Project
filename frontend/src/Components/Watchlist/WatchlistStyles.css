@@ -10,7 +10,6 @@
 .sellingPrice {
     font-size: 30px;
     color: #095203;
-    float: right;
 }
 
 .oldPrice {
@@ -23,9 +22,7 @@
     margin-top: 2%;
 }
 
-.rightSection {
-    float: right;
-}
+.rightSection {}
 
 .sellerName {
     color: #606060;
@@ -54,5 +51,5 @@
 }
 
 .contact {
-    margin-left: 60%;
+    /* margin-left: 60%; */
 }

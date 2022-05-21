@@ -1,17 +1,18 @@
 import LoggedInNavBar from "../Navbar/LoggedInNavbar";
-import { Container, Button, Card, Text } from "react-bootstrap";
-import calculusImage from "./Calculus Textbook.jpg";
 import "./WatchlistStyles.css";
 import WatchlistListing from "./WatchlistListing";
 import React, { useEffect, useState } from 'react';
 
-
+/*
+    Watchlist Page
+*/
 export default function WatchList() {
     const [watchlistListings, setWatclistListings] = useState({
         textbooks: {}
     });
     const email = localStorage.getItem('email');
 
+    // Fetch all of the user's interested listings and display it on the page.
     useEffect(() => {
         if (email !== undefined) {
             let userEmail = {
@@ -45,7 +46,6 @@ export default function WatchList() {
     return (
         <div className="maindiv">
             <LoggedInNavBar />
-
             <div className="watchlistContainer">
                 <div className="watchlistHeader">Your Watchlist</div>
                 {(Object.keys(watchlistListings.textbooks).length === 0) ? (
@@ -70,10 +70,6 @@ export default function WatchList() {
                     ))
                 )}
             </div>
-
-
         </div>
-
-
     );
 };

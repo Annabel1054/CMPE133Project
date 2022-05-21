@@ -4,6 +4,9 @@ import React, { useEffect } from "react";
 import { InputGroup, DropdownButton, Dropdown, FormControl, Button, Form } from 'react-bootstrap';
 import './styles.css';
 
+/*
+    Main Search Page
+*/
 export default function FindTextbooks() {
     const [searchBy, setSearchBy] = React.useState('Textbook Title');
     const [result, setResult] = React.useState('');
@@ -13,6 +16,7 @@ export default function FindTextbooks() {
     const [originalListings, setOriginalListings] = React.useState();
     const email = localStorage.getItem('email');
 
+    // We first retrieve all available textbooks from the backend.
     useEffect(() => {
         let searchCriteria = {
             filterType: searchBy,
@@ -35,14 +39,16 @@ export default function FindTextbooks() {
             }).then(data => {
                 setOriginalListings(data);
                 setSearchedListings(data);
-                console.log(data)
             })
             .catch(function (error) {
                 console.log("Fetch error: " + error);
             });
     }, [])
 
-    const searchListings = () => {
+    // When user inputs a value into the search bar, retrieve textbooks with specified attributes. 
+    const searchListings = (e) => {
+        e.preventDefault();
+
         // This is where we will call the textbook listings api to fetch textbooks.
         console.log(searchBy);
         console.log(result);
@@ -89,7 +95,7 @@ export default function FindTextbooks() {
                     <Dropdown.Divider />
                     <Dropdown.Item onClick={(event) => { setSearchBy("Course") }}>Course</Dropdown.Item>
                 </DropdownButton>
-                <Form onSubmit={searchListings}>
+                <Form onSubmit={(e) => { searchListings(e) }} >
                     <FormControl className="inputBox" placeholder={"Enter " + searchBy} required onChange={(event) => { setResult(event.target.value) }} value={result} />
                     <Button className="goButton" type="submit">
                         Go
