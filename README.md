@@ -1,5 +1,8 @@
 # BookCycle
-Here is our official CMPE133 repo :)
+
+![alt text](https://i.imgur.com/ZmUR6XS.png)
+
+![alt text](https://i.imgur.com/afeiv5f.png)
 
 ## Installation Guide
 1. Open up a terminal in Visual Studio Code or use a command prompt
