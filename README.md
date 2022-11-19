@@ -1,4 +1,4 @@
-# CMPE133Project
+# BookCycle
 Here is our official CMPE133 repo :)
 
 ## Installation Guide
